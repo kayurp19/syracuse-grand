@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /guest.html
 
 Sitemap: https://www.syracusegrand.com/sitemap.xml

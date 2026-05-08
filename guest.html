@@ -1,0 +1,701 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Guest Directory · Syracuse Grand</title>
+<meta name="description" content="In-room guest directory for Syracuse Grand guests — WiFi, hotel policies, pool & spa rules, local restaurants, TV channels, and front-desk help." />
+
+<!-- Hidden from search engines -->
+<meta name="robots" content="noindex,nofollow" />
+<meta name="googlebot" content="noindex,nofollow" />
+
+<link rel="icon" href="./assets/images/logo-mark.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="./style.css" />
+
+<style>
+  /* ---- Guest Directory specific styling ---- */
+  .gd-hero {
+    background: linear-gradient(135deg, var(--navy-deep) 0%, var(--navy) 60%, var(--navy-soft) 100%);
+    color: #fff;
+    padding: clamp(96px, 14vw, 160px) 0 clamp(48px, 6vw, 80px);
+    position: relative;
+    overflow: hidden;
+  }
+  .gd-hero::before {
+    content: "";
+    position: absolute; inset: 0;
+    background-image: radial-gradient(circle at 20% 30%, rgba(212,160,59,.18), transparent 40%),
+                      radial-gradient(circle at 80% 70%, rgba(230,180,83,.12), transparent 45%);
+    pointer-events: none;
+  }
+  .gd-hero .eyebrow { color: var(--gold-bright); }
+  .gd-hero h1 { color: #fff; font-weight: 400; font-size: clamp(36px, 5vw, 56px); margin-bottom: 12px; }
+  .gd-hero p.lead { color: rgba(255,255,255,.82); max-width: 56ch; }
+
+  /* WiFi callout */
+  .wifi-card {
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-bright) 100%);
+    color: var(--navy-deep);
+    border-radius: 18px;
+    padding: clamp(24px, 4vw, 36px);
+    margin-top: clamp(32px, 4vw, 48px);
+    box-shadow: 0 18px 40px rgba(212,160,59,.35);
+    position: relative;
+  }
+  .wifi-card__label {
+    font-size: 12px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--navy-deep); opacity: 0.7;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .wifi-card h2 {
+    font-family: var(--serif); font-weight: 500; color: var(--navy-deep);
+    font-size: clamp(24px, 3vw, 32px); margin: 6px 0 18px;
+  }
+  .wifi-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+  @media (min-width: 640px) { .wifi-grid { grid-template-columns: repeat(3, 1fr); } }
+  .wifi-field {
+    background: rgba(255,255,255,.55);
+    border-radius: 12px;
+    padding: 14px 16px;
+    backdrop-filter: blur(6px);
+  }
+  .wifi-field__label {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--navy-deep); opacity: 0.7; margin-bottom: 4px;
+  }
+  .wifi-field__value {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: clamp(15px, 1.3vw, 18px); font-weight: 600;
+    color: var(--navy-deep); word-break: break-all;
+  }
+  .wifi-card__note {
+    margin-top: 14px; font-size: 13px; color: var(--navy-deep); opacity: 0.78;
+  }
+
+  /* Quick actions */
+  .quick-actions {
+    display: grid; grid-template-columns: 1fr; gap: 12px;
+    margin-top: 28px;
+  }
+  @media (min-width: 540px) { .quick-actions { grid-template-columns: 1fr 1fr; } }
+  .quick-action {
+    display: flex; align-items: center; gap: 14px;
+    padding: 16px 18px;
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.18);
+    border-radius: 12px;
+    color: #fff; text-decoration: none;
+    transition: background .2s, transform .2s;
+  }
+  .quick-action:hover { background: rgba(255,255,255,.14); transform: translateY(-1px); color: #fff; }
+  .quick-action svg { flex-shrink: 0; color: var(--gold-bright); }
+  .quick-action__label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; opacity: .7; }
+  .quick-action__value { font-size: 15px; font-weight: 600; }
+
+  /* Accordion sections */
+  .gd-body { padding: clamp(48px, 6vw, 80px) 0 clamp(72px, 9vw, 120px); }
+  .gd-section { margin-bottom: 14px; border-bottom: 1px solid #E5DFD2; }
+  .gd-section[open] { background: #FCFAF5; border-radius: 12px 12px 0 0; padding: 0 18px; margin-bottom: 14px; border-bottom: none; box-shadow: 0 6px 20px rgba(15,23,42,.05); }
+  .gd-section[open] .gd-section__body { border-bottom: 1px solid #E5DFD2; }
+  .gd-section summary {
+    list-style: none; cursor: pointer;
+    padding: 22px 0;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    font-family: var(--serif); font-weight: 500; font-size: clamp(20px, 2.2vw, 26px);
+    color: var(--navy-deep);
+  }
+  .gd-section summary::-webkit-details-marker { display: none; }
+  .gd-section__icon {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--bg-soft); color: var(--gold-deep);
+    display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+    transition: transform .25s ease, background .2s;
+  }
+  .gd-section[open] .gd-section__icon { background: var(--gold); color: var(--navy-deep); transform: rotate(45deg); }
+  .gd-section__body { padding: 4px 0 28px; color: var(--ink-soft); font-size: 16px; line-height: 1.7; }
+  .gd-section__body h3 {
+    font-family: var(--sans); font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--gold-deep); margin: 22px 0 10px;
+  }
+  .gd-section__body h3:first-child { margin-top: 4px; }
+  .gd-section__body p { margin: 0 0 12px; }
+  .gd-section__body ul { padding-left: 20px; margin: 0 0 14px; }
+  .gd-section__body ul li { margin-bottom: 6px; }
+  .gd-section__body strong { color: var(--ink); font-weight: 600; }
+
+  /* Restaurant / place card */
+  .place {
+    padding: 16px 0;
+    border-top: 1px solid #EFE9DC;
+  }
+  .place:first-child { border-top: none; padding-top: 4px; }
+  .place__name { font-weight: 600; color: var(--ink); font-size: 16px; margin-bottom: 4px; }
+  .place__meta { font-size: 13px; color: var(--ink-soft); opacity: 0.75; margin-bottom: 6px; }
+  .place__directions { font-size: 14px; color: var(--ink-soft); line-height: 1.6; }
+
+  /* TV grid */
+  .tv-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 4px 18px; margin-top: 8px; }
+  .tv-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 14px; border-bottom: 1px dotted #E5DFD2; }
+  .tv-row__num { font-family: ui-monospace, "SF Mono", Menlo, monospace; color: var(--gold-deep); font-weight: 600; min-width: 38px; }
+  .tv-row__name { color: var(--ink-soft); text-align: right; }
+
+  /* Help block */
+  .help-card {
+    background: var(--navy-deep); color: #fff;
+    border-radius: 16px;
+    padding: clamp(28px, 4vw, 40px);
+    margin-top: clamp(40px, 5vw, 64px);
+    text-align: center;
+  }
+  .help-card h2 { color: #fff; margin-bottom: 10px; }
+  .help-card p { color: rgba(255,255,255,.78); max-width: 48ch; margin: 0 auto 22px; }
+  .help-card .btn { margin: 6px; }
+  .help-card .btn--ghost-light { border-color: rgba(255,255,255,.4); color: #fff; }
+
+  .external-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--gold-deep); font-weight: 500; text-decoration: none;
+    border-bottom: 1px solid rgba(176,131,42,.3);
+    padding-bottom: 1px;
+  }
+  .external-link:hover { border-bottom-color: var(--gold-deep); color: var(--gold-deep); }
+
+  .gd-intro { max-width: 60ch; }
+  .gd-toc { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+  .gd-toc a {
+    font-size: 13px; padding: 8px 14px;
+    background: var(--bg-soft); color: var(--navy-deep);
+    border-radius: 999px; text-decoration: none; font-weight: 500;
+    transition: background .15s;
+    border: 1px solid #E5DFD2;
+  }
+  .gd-toc a:hover { background: var(--gold); border-color: var(--gold); }
+
+  /* Floor plan */
+  .floor-plan-wrap {
+    margin: 14px 0 18px;
+    border: 1px solid #E5DFD2;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff;
+    cursor: zoom-in;
+    transition: box-shadow .2s;
+  }
+  .floor-plan-wrap:hover { box-shadow: 0 8px 24px rgba(15,23,42,.12); }
+  .floor-plan-wrap img { display: block; width: 100%; height: auto; }
+  .floor-plan-caption {
+    font-size: 13px; color: var(--ink-soft); opacity: .8;
+    padding: 12px 16px;
+    border-top: 1px solid #EFE9DC;
+    background: #FCFAF5;
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  }
+  .legend { display: flex; flex-wrap: wrap; gap: 18px; margin: 10px 0 16px; font-size: 14px; }
+  .legend__item { display: inline-flex; align-items: center; gap: 8px; }
+  .legend__num {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: var(--gold); color: var(--navy-deep);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 13px;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+
+  /* Lightbox */
+  .lightbox {
+    position: fixed; inset: 0; z-index: 1000;
+    background: rgba(15, 23, 42, 0.92);
+    display: none; align-items: center; justify-content: center;
+    padding: 20px;
+    cursor: zoom-out;
+  }
+  .lightbox.is-open { display: flex; }
+  .lightbox img { max-width: 100%; max-height: 90vh; object-fit: contain; box-shadow: 0 20px 60px rgba(0,0,0,.5); border-radius: 8px; }
+  .lightbox__close {
+    position: absolute; top: 20px; right: 20px;
+    background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.25);
+    color: #fff; width: 44px; height: 44px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    cursor: pointer;
+  }
+  .lightbox__close:hover { background: rgba(255,255,255,.22); }
+
+  @media (max-width: 540px) {
+    .gd-section[open] { padding: 0 14px; }
+    .gd-section summary { font-size: 19px; padding: 18px 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div data-include="header" data-transparent="false"></div>
+
+<!-- Hero -->
+<section class="gd-hero">
+  <div class="container">
+    <p class="eyebrow">Welcome to your stay</p>
+    <h1>Guest <em style="font-style: italic; color: var(--gold-bright);">Directory</em></h1>
+    <p class="lead">Everything you need during your visit — WiFi, hotel policies, pool hours, dining nearby, TV guide, and front-desk help — all in one place.</p>
+
+    <!-- WiFi card (most-used) -->
+    <div class="wifi-card">
+      <div class="wifi-card__label">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12.55a11 11 0 0 1 14.08 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01"/></svg>
+        Complimentary WiFi
+      </div>
+      <h2>Connect in seconds</h2>
+      <div class="wifi-grid">
+        <div class="wifi-field">
+          <div class="wifi-field__label">Network</div>
+          <div class="wifi-field__value">BWLiverpool Guest</div>
+        </div>
+        <div class="wifi-field">
+          <div class="wifi-field__label">Username</div>
+          <div class="wifi-field__value">bwliverpool136</div>
+        </div>
+        <div class="wifi-field">
+          <div class="wifi-field__label">Password</div>
+          <div class="wifi-field__value">47781</div>
+        </div>
+      </div>
+      <p class="wifi-card__note">Need help connecting? Call WiFi support at <strong>1-888-812-2591</strong>.</p>
+    </div>
+
+    <!-- Quick actions -->
+    <div class="quick-actions">
+      <a class="quick-action" href="tel:+13157014400">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <div>
+          <div class="quick-action__label">Front Desk</div>
+          <div class="quick-action__value">(315) 701-4400</div>
+        </div>
+      </a>
+      <a class="quick-action" href="local-area.html">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <div>
+          <div class="quick-action__label">Explore</div>
+          <div class="quick-action__value">Local area & maps</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Body -->
+<section class="gd-body">
+  <div class="container" style="max-width: 920px;">
+
+    <p class="gd-intro" style="font-size: 17px; color: var(--ink-soft);">Tap any section to expand. Most-asked questions are at the top.</p>
+
+    <div class="gd-toc">
+      <a href="#policies">House Policies</a>
+      <a href="#pool">Pool & Spa</a>
+      <a href="#emergency">Emergency & Floor Plan</a>
+      <a href="#dining">Dining Nearby</a>
+      <a href="#explore">Things to Do</a>
+      <a href="#tv">TV Channels</a>
+      <a href="#extras">Toiletries & Extras</a>
+    </div>
+
+    <div style="margin-top: 36px;">
+
+      <!-- House Policies -->
+      <details class="gd-section" id="policies" open>
+        <summary>
+          <span>House Policies & Hotel Hours</span>
+          <span class="gd-section__icon" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+          </span>
+        </summary>
+        <div class="gd-section__body">
+
+          <h3>Daily Schedule</h3>
+          <ul>
+            <li><strong>Check-out:</strong> 11:00 AM. Late check-out by request, subject to availability.</li>
+            <li><strong>Express check-out:</strong> Drop your key in the front-desk box on your way out — your folio will be emailed.</li>
+            <li><strong>Breakfast:</strong> Mon–Fri 6:00–9:00 AM · Sat–Sun 7:00–10:00 AM, in the breakfast room off the lobby.</li>
+            <li><strong>Fitness center:</strong> Open 24 hours with your room key.</li>
+            <li><strong>Quiet hours:</strong> 9:00 PM Sun–Fri · 10:00 PM Saturday.</li>
+          </ul>
+
+          <h3>Housekeeping</h3>
+          <p>Daily refresh on request. Full housekeeping service is provided every 2–3 days for stays of multiple nights — call the front desk at any time if you need fresh towels, linens, or amenities sooner.</p>
+
+          <h3>Occupancy</h3>
+          <p>Each room is priced for two guests. Additional guests after the first two are <strong>$10 per person, per night</strong>. Maximum occupancy is set per room type — please ask the front desk before adding extra guests.</p>
+
+          <h3>Smoke-Free Policy</h3>
+          <p>The Syracuse Grand is <strong>100% smoke-free</strong> — including all rooms, balconies, and indoor common areas. This applies to cigarettes, cigars, vapes, e-cigarettes, marijuana, <strong>incense, and candles</strong>. A <strong>$250 cleaning fee</strong> is charged to any room found in violation.</p>
+
+          <h3>Other Rules</h3>
+          <ul>
+            <li><strong>No parties</strong> or large gatherings in guest rooms.</li>
+            <li>Drug-free property. Underage alcohol consumption is not permitted.</li>
+            <li>Sporting equipment, weapons, and similar items must be stored in your vehicle.</li>
+            <li><strong>Pets welcome</strong> in designated rooms with a non-refundable pet fee — please notify the front desk at check-in.</li>
+            <li><strong>No refunds</strong> after check-in. Cancellation policies follow your booking source.</li>
+          </ul>
+        </div>
+      </details>
+
+      <!-- Pool & Spa -->
+      <details class="gd-section" id="pool">
+        <summary>
+          <span>Pool & Hot Tub Rules</span>
+          <span class="gd-section__icon" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+          </span>
+        </summary>
+        <div class="gd-section__body">
+
+          <h3>Hours & Capacity</h3>
+          <ul>
+            <li><strong>Open daily:</strong> 9:00 AM – 10:00 PM</li>
+            <li><strong>Maximum capacity:</strong> 31 guests total — 26 in the pool, 5 in the hot tub.</li>
+            <li>Pool and spa are unsupervised. <strong>Swim at your own risk.</strong></li>
+          </ul>
+
+          <h3>Safety</h3>
+          <ul>
+            <li><strong>Never swim alone.</strong> Always have someone with you.</li>
+            <li>Children under 16 must be supervised by an adult at all times.</li>
+            <li>No running, diving, or rough play in the pool area.</li>
+            <li>Shower before entering the pool or spa.</li>
+          </ul>
+
+          <h3>Hot Tub</h3>
+          <ul>
+            <li><strong>Maximum 7 people</strong> at a time.</li>
+            <li><strong>15-minute limit</strong> per session.</li>
+            <li>Children under 16 are not permitted in the hot tub without direct adult supervision.</li>
+            <li>Pregnant women, anyone with heart conditions or high blood pressure, and guests who have consumed alcohol should not use the hot tub.</li>
+          </ul>
+
+          <p style="margin-top: 18px; padding: 14px 16px; background: var(--bg-soft); border-left: 3px solid var(--gold); border-radius: 4px;">In an emergency, dial <strong>9-1-1</strong>, then call the front desk at <strong>(315) 701-4400</strong>.</p>
+        </div>
+      </details>
+
+      <!-- Emergency & Floor Plan -->
+      <details class="gd-section" id="emergency">
+        <summary>
+          <span>Emergency & Floor Plan</span>
+          <span class="gd-section__icon" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+          </span>
+        </summary>
+        <div class="gd-section__body">
+
+          <p>In any emergency, dial <strong>9-1-1</strong> first, then call the front desk at <a href="tel:+13157014400" style="color: var(--gold-deep); font-weight: 600;">(315) 701-4400</a>. Please take a moment to locate the nearest exit, fire pull station, and extinguisher to your room.</p>
+
+          <h3>Legend</h3>
+          <div class="legend">
+            <span class="legend__item"><span class="legend__num">1</span> Exit Sign</span>
+            <span class="legend__item"><span class="legend__num">2</span> Pull Station</span>
+            <span class="legend__item"><span class="legend__num">3</span> Fire Extinguisher</span>
+          </div>
+
+          <h3>Floor Plan — Both Floors</h3>
+          <p style="margin-bottom: 8px; font-size: 14px;">First floor: rooms 101–129. Second floor: rooms 201–234.</p>
+          <button type="button" class="floor-plan-wrap" data-lightbox="./assets/images/floor-plan.jpg" aria-label="Open full-size floor plan" style="width:100%; padding:0; border:1px solid #E5DFD2; font:inherit; text-align:left;">
+            <img src="./assets/images/floor-plan.jpg" alt="Syracuse Grand emergency floor plan showing both floors with rooms, exits, fire pull stations, and fire extinguisher locations." loading="lazy" />
+            <div class="floor-plan-caption">
+              <span>Tap to enlarge</span>
+              <span style="display:inline-flex; align-items:center; gap:6px; color:var(--gold-deep); font-weight:500;">
+                Zoom
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg>
+              </span>
+            </div>
+          </button>
+
+          <h3>If You Hear the Alarm</h3>
+          <ul>
+            <li>Feel the door before opening — if it's hot, do not open. Stay in your room, seal the door with wet towels, and signal from the window.</li>
+            <li>If the door is cool, exit using the nearest <strong>marked stairwell</strong> — never use the elevator.</li>
+            <li>Stay low if there is smoke. Walk, don't run.</li>
+            <li>Once outside, gather at the meeting point in the front parking lot, well away from the building.</li>
+            <li>Do not re-enter the building until cleared by the fire department.</li>
+          </ul>
+
+          <h3>Reporting an Emergency</h3>
+          <ul>
+            <li><strong>Medical / fire / police:</strong> 9-1-1</li>
+            <li><strong>Front desk (24 hours):</strong> (315) 701-4400 or dial 0 from your room phone</li>
+            <li><strong>Liverpool Fire Department (non-emergency):</strong> (315) 457-4030</li>
+          </ul>
+        </div>
+      </details>
+
+      <!-- Dining -->
+      <details class="gd-section" id="dining">
+        <summary>
+          <span>Dining Nearby</span>
+          <span class="gd-section__icon" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+          </span>
+        </summary>
+        <div class="gd-section__body">
+
+          <h3>Walking & Very Close</h3>
+          <div class="place">
+            <div class="place__name">Santangelo's Restaurant</div>
+            <div class="place__meta">Italian · Local favorite</div>
+            <div class="place__directions">Right out of the hotel, take a quick left onto Old Liverpool Rd. Santangelo's is about ½ mile down on the right.</div>
+          </div>
+          <div class="place">
+            <div class="place__name">Ichiban Japanese Steakhouse</div>
+            <div class="place__meta">Hibachi · Sushi</div>
+            <div class="place__directions">Right out of the hotel onto Old Liverpool Rd, about ¾ mile on the left.</div>
+          </div>
+          <div class="place">
+            <div class="place__name">Gardenview Diner</div>
+            <div class="place__meta">Diner · Breakfast & lunch</div>
+            <div class="place__directions">Right out of the hotel, follow Old Liverpool Rd to Buckley Rd — Gardenview is at the corner.</div>
+          </div>
+          <div class="place">
+            <div class="place__name">Heid's of Liverpool</div>
+            <div class="place__meta">Hot dogs · Local landmark</div>
+            <div class="place__directions">Right out of the hotel, follow Oswego Rd into the village of Liverpool. Heid's is on the right just past the village center.</div>
+          </div>
+
+          <h3>Just a Few Minutes</h3>
+          <div class="place">
+            <div class="place__name">The Retreat</div>
+            <div class="place__meta">American · Bar & grill</div>
+            <div class="place__directions">Right out of the hotel onto Old Liverpool Rd, then left onto Buckley Rd. The Retreat is on the right.</div>
+          </div>
+          <div class="place">
+            <div class="place__name">Limp Lizard Bar & Grill</div>
+            <div class="place__meta">BBQ · Smoked meats</div>
+            <div class="place__directions">Right out of the hotel, take Old Liverpool Rd to Buckley Rd, then left. Limp Lizard is on the right after about a mile.</div>
+          </div>
+          <div class="place">
+            <div class="place__name">Dinosaur Bar-B-Que</div>
+            <div class="place__meta">BBQ · Iconic Syracuse spot</div>
+            <div class="place__directions">Take I-690 East toward downtown Syracuse, exit at Franklin St. Dinosaur is on Willow St near the Inner Harbor.</div>
+          </div>
+          <div class="place">
+            <div class="place__name">Tully's Good Times</div>
+            <div class="place__meta">American · Tenders & wings</div>
+            <div class="place__directions">Right out of the hotel onto Old Liverpool Rd, follow to Rt. 31 — Tully's is in the Cicero/Liverpool corridor on the right.</div>
+          </div>
+          <div class="place">
+            <div class="place__name">Spaghetti Warehouse</div>
+            <div class="place__meta">Italian · Family-style</div>
+            <div class="place__directions">Take I-690 East to downtown Syracuse, exit at W. Genesee St. Located on Franklin St in Armory Square.</div>
+          </div>
+          <div class="place">
+            <div class="place__name">Applebee's Liverpool</div>
+            <div class="place__meta">American · Casual</div>
+            <div class="place__directions">Right out of the hotel onto Old Liverpool Rd, then to Rt. 57 (Oswego Rd). Located in the strip across from Wegmans.</div>
+          </div>
+
+          <h3>Groceries & Essentials</h3>
+          <div class="place">
+            <div class="place__name">Wegmans (Liverpool)</div>
+            <div class="place__meta">Grocery · Hot bar · Pharmacy</div>
+            <div class="place__directions">Right out of the hotel, follow Old Liverpool Rd to Oswego Rd (Rt. 57). Wegmans is on the left after about 2 miles.</div>
+          </div>
+          <div class="place">
+            <div class="place__name">Liquor Store</div>
+            <div class="place__meta">Beer, wine & spirits</div>
+            <div class="place__directions">Same plaza as Wegmans on Oswego Rd — easy walk from the Wegmans lot.</div>
+          </div>
+        </div>
+      </details>
+
+      <!-- Things to do -->
+      <details class="gd-section" id="explore">
+        <summary>
+          <span>Things to Do & Local Attractions</span>
+          <span class="gd-section__icon" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+          </span>
+        </summary>
+        <div class="gd-section__body">
+
+          <h3>Downtown & Entertainment</h3>
+          <div class="place">
+            <div class="place__name">Armory Square</div>
+            <div class="place__meta">Historic district · Restaurants & nightlife</div>
+            <div class="place__directions">Take I-690 East to downtown Syracuse, exit at W. Genesee St. Walkable streets lined with restaurants — try Pastabilities, Kitty Hoynes Irish Pub, or the Landmark Theatre.</div>
+          </div>
+          <div class="place">
+            <div class="place__name">Destiny USA</div>
+            <div class="place__meta">Largest mall in NY · Shopping & entertainment</div>
+            <div class="place__directions">Right out of the hotel, take I-81 South 1 exit. Massive shopping center with restaurants, an arcade, mini-golf, ropes course, and IMAX.</div>
+          </div>
+          <div class="place">
+            <div class="place__name">Oswego Rd Strip</div>
+            <div class="place__meta">Restaurants · Retail · Cinema</div>
+            <div class="place__directions">Right out of the hotel onto Old Liverpool Rd, then onto Rt. 57. Mile of dining and shopping.</div>
+          </div>
+          <div class="place">
+            <div class="place__name">Route 31 (Cicero) Shopping</div>
+            <div class="place__meta">Big-box · Casual dining</div>
+            <div class="place__directions">Right out of the hotel onto Old Liverpool Rd, then to I-81 North to the Rt. 31 exit (Cicero). Walmart, Target, and many restaurants.</div>
+          </div>
+
+          <h3>Outdoors & Family</h3>
+          <div class="place">
+            <div class="place__name">Onondaga Lake State Park</div>
+            <div class="place__meta">Trails · Picnic · Marina</div>
+            <div class="place__directions">Right out of the hotel onto Old Liverpool Rd, then Onondaga Lake Pkwy. Park entrance is on the left along the lake.</div>
+          </div>
+          <div class="place">
+            <div class="place__name">Rosamond Gifford Zoo</div>
+            <div class="place__meta">Family · 700+ animals</div>
+            <div class="place__directions">Take I-690 East to W. Genesee St exit, then follow signs to Burnet Park.</div>
+          </div>
+          <div class="place">
+            <div class="place__name">NYS Fairgrounds & Empower FCU Amphitheater</div>
+            <div class="place__meta">Concerts · Annual State Fair</div>
+            <div class="place__directions">Take I-690 West toward Geddes — exit at the State Fair signs.</div>
+          </div>
+
+          <h3>Sports & Travel</h3>
+          <div class="place">
+            <div class="place__name">JMA Wireless Dome (Syracuse University)</div>
+            <div class="place__meta">SU football · basketball · concerts</div>
+            <div class="place__directions">Take I-81 South to Adams St / Harrison St exit, follow signs to SU campus.</div>
+          </div>
+          <div class="place">
+            <div class="place__name">Syracuse Hancock International Airport (SYR)</div>
+            <div class="place__meta">4 miles · Approx. 8-minute drive</div>
+            <div class="place__directions">Right out of the hotel, take Old Liverpool Rd to Electronics Pkwy, then follow airport signs.</div>
+          </div>
+
+          <p style="margin-top: 22px;">For a full Central NY visitors guide, see the <a class="external-link" href="https://www.visitsyracuse.com/plan-your-visit/visitors-guide/digital-visitors-guide/" target="_blank" rel="noopener noreferrer">Visit Syracuse Digital Guide<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M7 7h10v10"/></svg></a>.</p>
+        </div>
+      </details>
+
+      <!-- TV Channels -->
+      <details class="gd-section" id="tv">
+        <summary>
+          <span>TV Channel Guide</span>
+          <span class="gd-section__icon" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+          </span>
+        </summary>
+        <div class="gd-section__body">
+          <p>A few of the most-asked channels:</p>
+          <div class="tv-grid">
+            <div class="tv-row"><span class="tv-row__num">5</span><span class="tv-row__name">NBC (WSTM)</span></div>
+            <div class="tv-row"><span class="tv-row__num">7</span><span class="tv-row__name">CW</span></div>
+            <div class="tv-row"><span class="tv-row__num">9</span><span class="tv-row__name">ABC (WSYR)</span></div>
+            <div class="tv-row"><span class="tv-row__num">10</span><span class="tv-row__name">PBS</span></div>
+            <div class="tv-row"><span class="tv-row__num">11</span><span class="tv-row__name">FOX (WSYT)</span></div>
+            <div class="tv-row"><span class="tv-row__num">12</span><span class="tv-row__name">CBS (WTVH)</span></div>
+            <div class="tv-row"><span class="tv-row__num">25</span><span class="tv-row__name">ESPN</span></div>
+            <div class="tv-row"><span class="tv-row__num">26</span><span class="tv-row__name">ESPN 2</span></div>
+            <div class="tv-row"><span class="tv-row__num">30</span><span class="tv-row__name">CNN</span></div>
+            <div class="tv-row"><span class="tv-row__num">31</span><span class="tv-row__name">FOX News</span></div>
+            <div class="tv-row"><span class="tv-row__num">35</span><span class="tv-row__name">MSNBC</span></div>
+            <div class="tv-row"><span class="tv-row__num">40</span><span class="tv-row__name">USA</span></div>
+            <div class="tv-row"><span class="tv-row__num">45</span><span class="tv-row__name">TBS</span></div>
+            <div class="tv-row"><span class="tv-row__num">50</span><span class="tv-row__name">TNT</span></div>
+            <div class="tv-row"><span class="tv-row__num">55</span><span class="tv-row__name">Discovery</span></div>
+            <div class="tv-row"><span class="tv-row__num">60</span><span class="tv-row__name">HGTV</span></div>
+            <div class="tv-row"><span class="tv-row__num">65</span><span class="tv-row__name">Food Network</span></div>
+            <div class="tv-row"><span class="tv-row__num">70</span><span class="tv-row__name">Cartoon Network</span></div>
+            <div class="tv-row"><span class="tv-row__num">75</span><span class="tv-row__name">Disney</span></div>
+            <div class="tv-row"><span class="tv-row__num">80</span><span class="tv-row__name">Nickelodeon</span></div>
+            <div class="tv-row"><span class="tv-row__num">90</span><span class="tv-row__name">Hallmark</span></div>
+            <div class="tv-row"><span class="tv-row__num">100</span><span class="tv-row__name">Local Info</span></div>
+          </div>
+          <p style="margin-top: 18px; font-size: 14px; opacity: 0.8;">Don't see a channel? Press the <strong>Guide</strong> button on your remote, or call the front desk for the full channel lineup.</p>
+        </div>
+      </details>
+
+      <!-- Toiletries & Extras -->
+      <details class="gd-section" id="extras">
+        <summary>
+          <span>Toiletries & Extras</span>
+          <span class="gd-section__icon" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+          </span>
+        </summary>
+        <div class="gd-section__body">
+          <p>Need anything during your stay? Stop by the front desk — these are <strong>free of charge</strong> and available any time:</p>
+          <ul>
+            <li>Replacement shampoo, conditioner, body wash, lotion, and bar soap</li>
+            <li>Extra towels, washcloths, and linens</li>
+            <li>Toothbrush, toothpaste, razor, comb, shaving cream</li>
+            <li>Iron & ironing board, hair dryer (if missing from your room)</li>
+            <li>Extra pillows or blankets</li>
+            <li>Pen, paper, mailing envelope</li>
+            <li>Local maps and printed directions</li>
+          </ul>
+          <p>For anything else — tips on what's open late, where to grab a quick coffee, or which entrance is closest to your car — we're happy to help. <strong>Just call extension 0</strong> from your room phone or dial <a href="tel:+13157014400" style="color: var(--gold-deep); font-weight: 600;">(315) 701-4400</a>.</p>
+        </div>
+      </details>
+
+    </div>
+
+    <!-- Help block -->
+    <div class="help-card">
+      <h2>Need anything else?</h2>
+      <p>The front desk is staffed 24 hours a day. If something isn't working in your room, or you just need a recommendation, give us a ring.</p>
+      <a class="btn btn--gold" href="tel:+13157014400">Call (315) 701-4400</a>
+      <a class="btn btn--ghost-light" href="contact.html">Contact Page</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- Footer -->
+<div data-include="footer"></div>
+
+<script src="./includes.js"></script>
+<script src="./app.js"></script>
+
+<!-- Lightbox for floor plan -->
+<div class="lightbox" id="lightbox" role="dialog" aria-label="Floor plan, full size">
+  <button class="lightbox__close" aria-label="Close">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+  </button>
+  <img src="" alt="Floor plan, full size" />
+</div>
+
+<script>
+  // Smooth-scroll table-of-contents anchors and auto-open the target section
+  document.querySelectorAll('.gd-toc a').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const id = link.getAttribute('href').slice(1);
+      const target = document.getElementById(id);
+      if (target) {
+        if (!target.open) target.open = true;
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // Lightbox for floor plan
+  (function() {
+    const lb = document.getElementById('lightbox');
+    const lbImg = lb.querySelector('img');
+    const closeBtn = lb.querySelector('.lightbox__close');
+    document.querySelectorAll('[data-lightbox]').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.preventDefault();
+        lbImg.src = btn.getAttribute('data-lightbox');
+        lb.classList.add('is-open');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+    function close() {
+      lb.classList.remove('is-open');
+      document.body.style.overflow = '';
+    }
+    closeBtn.addEventListener('click', close);
+    lb.addEventListener('click', e => { if (e.target === lb) close(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && lb.classList.contains('is-open')) close(); });
+  })();
+</script>
+
+</body>
+</html>
