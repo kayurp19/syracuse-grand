@@ -69,7 +69,7 @@ function renderFooter() {
             <span class="footer__logo-mark"><img src="./assets/images/logo-mark.png" alt="Syracuse Grand" width="36" height="50"></span>
             <span class="footer__logo-text">SYRACUSE GRAND</span>
           </a>
-          <p style="font-size: 14px; line-height: 1.7; max-width: 36ch;">A modern, welcoming hotel in Liverpool, NY — minutes from the airport, Destiny USA, and Syracuse University.</p>
+          <p style="font-size: 14px; line-height: 1.7; max-width: 36ch;">A modern, welcoming hotel in Liverpool, NY — free hot breakfast, indoor pool &amp; hot tub, 24-hour fitness center, free parking, and free Wi-Fi. Minutes from the airport, Destiny USA, and Syracuse University.</p>
         </div>
         <div>
           <h4>Visit</h4>
