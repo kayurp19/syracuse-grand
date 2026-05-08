@@ -16,6 +16,7 @@ const ADDRESS_2   = "Liverpool, NY 13088";
 const NAV = [
   { href: "index.html",      label: "Home"       },
   { href: "rooms.html",      label: "Rooms"      },
+  { href: "gallery.html",    label: "Gallery"    },
   { href: "amenities.html",  label: "Amenities"  },
   { href: "meetings.html",   label: "Meetings"   },
   { href: "groups.html",     label: "Groups"     },
@@ -83,6 +84,7 @@ function renderFooter() {
           <h4>Stay</h4>
           <ul>
             <li><a href="rooms.html">Rooms</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
             <li><a href="amenities.html">Amenities</a></li>
             <li><a href="meetings.html">Meetings</a></li>
             <li><a href="groups.html">Groups</a></li>
