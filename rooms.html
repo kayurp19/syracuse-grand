@@ -70,7 +70,31 @@
 
 <section class="section">
   <div class="container">
-    <p class="lead reveal" style="max-width: 70ch;">All 61 of our air-conditioned guest rooms come standard with the things that make a stay feel easy — refrigerator, LCD television with cable and HBO, free wireless internet, work desk, coffee/tea maker, hair dryer, iron and ironing board. Bathrooms feature a tub or shower, with complimentary toiletries.</p>
+    <p class="lead reveal" style="max-width: 70ch;">Every guest room at the Syracuse Grand comes standard with what makes a stay feel easy — individual climate control, refrigerator, LCD television with cable and HBO, free wireless internet, work desk, coffee/tea maker, hair dryer, iron and ironing board. Choose from five room types below.</p>
+
+    <!-- Quick room-type chooser -->
+    <div class="reveal" style="margin-top: 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px;">
+      <a href="#two-queen" style="text-decoration:none; padding: 16px; border: 1px solid var(--line); border-radius: 10px; transition: background .2s, border-color .2s; display: block;" onmouseover="this.style.background='var(--bg-soft)'" onmouseout="this.style.background='transparent'">
+        <div style="font-size:11px; letter-spacing:.12em; color: var(--gold-deep); text-transform: uppercase; font-weight:600;">Standard</div>
+        <div style="font-family: var(--serif); color: var(--navy-deep); font-size: 18px; margin-top: 4px;">Two Queen</div>
+      </a>
+      <a href="#king" style="text-decoration:none; padding: 16px; border: 1px solid var(--line); border-radius: 10px; display: block;">
+        <div style="font-size:11px; letter-spacing:.12em; color: var(--gold-deep); text-transform: uppercase; font-weight:600;">Standard</div>
+        <div style="font-family: var(--serif); color: var(--navy-deep); font-size: 18px; margin-top: 4px;">King</div>
+      </a>
+      <a href="#two-queen-suite" style="text-decoration:none; padding: 16px; border: 1px solid var(--line); border-radius: 10px; display: block;">
+        <div style="font-size:11px; letter-spacing:.12em; color: var(--gold-deep); text-transform: uppercase; font-weight:600;">Suite</div>
+        <div style="font-family: var(--serif); color: var(--navy-deep); font-size: 18px; margin-top: 4px;">Two Queen Suite</div>
+      </a>
+      <a href="#king-suite" style="text-decoration:none; padding: 16px; border: 1px solid var(--line); border-radius: 10px; display: block;">
+        <div style="font-size:11px; letter-spacing:.12em; color: var(--gold-deep); text-transform: uppercase; font-weight:600;">Suite</div>
+        <div style="font-family: var(--serif); color: var(--navy-deep); font-size: 18px; margin-top: 4px;">King Suite</div>
+      </a>
+      <a href="#jacuzzi" style="text-decoration:none; padding: 16px; border: 2px solid var(--gold); border-radius: 10px; background: linear-gradient(135deg, rgba(212,160,59,.08), rgba(230,180,83,.04)); display: block;">
+        <div style="font-size:11px; letter-spacing:.12em; color: var(--gold-deep); text-transform: uppercase; font-weight:700;">Premium · Only 2</div>
+        <div style="font-family: var(--serif); color: var(--navy-deep); font-size: 18px; margin-top: 4px;">King Jacuzzi</div>
+      </a>
+    </div>
   </div>
 </section>
 
@@ -79,15 +103,15 @@
 
     <!-- Two Queen -->
     <article id="two-queen" class="split section reveal">
-      <div class="split__media"><img src="./assets/images/front-desk.jpg" alt="Welcoming hotel interior and front desk at Syracuse Grand" loading="lazy"/></div>
+      <div class="split__media"><img src="./assets/images/room-two-queen.jpg" alt="Two Queen guest room with two queen beds at Syracuse Grand hotel in Liverpool, NY" loading="lazy"/></div>
       <div>
-        <p class="eyebrow">Most Popular</p>
-        <h2 class="serif" style="margin: 16px 0 20px;">Two Queen Beds</h2>
-        <p>Roomy and flexible, this layout is ideal for families, friends traveling together, or anyone who likes a little extra space. Two comfortable queen beds, a refrigerator, LCD TV, and a quiet, restful environment for the whole party.</p>
+        <p class="eyebrow">Standard · Most Popular</p>
+        <h2 class="serif" style="margin: 16px 0 20px;">Two Queen Room</h2>
+        <p>Our most-booked layout. Roomy and flexible, ideal for families, friends traveling together, or anyone who likes a little extra space. Two comfortable queen beds and a quiet, restful environment for the whole party.</p>
         <ul class="spec-list">
           <li>Sleeps up to 4</li>
           <li>Two queen beds with plush bedding</li>
-          <li>Refrigerator, coffee/tea maker</li>
+          <li>Refrigerator and coffee/tea maker</li>
           <li>LCD TV with cable and HBO</li>
           <li>Free wireless &amp; wired internet</li>
           <li>Tub/shower combo, hair dryer, complimentary toiletries</li>
@@ -100,16 +124,16 @@
 
     <!-- King -->
     <article id="king" class="split split--reverse section reveal" style="border-top: 1px solid var(--line);">
-      <div class="split__media"><img src="./assets/images/bathroom.jpg" alt="Modern bathroom in a Syracuse Grand guest room" loading="lazy"/></div>
+      <div class="split__media"><img src="./assets/images/room-king.jpg" alt="King guest room with king bed and work desk at Syracuse Grand hotel" loading="lazy"/></div>
       <div>
-        <p class="eyebrow">Couples &amp; Solo</p>
+        <p class="eyebrow">Standard · Couples &amp; Solo</p>
         <h2 class="serif" style="margin: 16px 0 20px;">King Room</h2>
         <p>A relaxing retreat anchored by a single king-size bed, with all the comforts you need to wind down — including a generous work desk for travelers passing through Central New York on business.</p>
         <ul class="spec-list">
           <li>Sleeps up to 2</li>
           <li>One king bed with plush bedding</li>
           <li>Work desk and ergonomic chair</li>
-          <li>Refrigerator, coffee/tea maker</li>
+          <li>Refrigerator and coffee/tea maker</li>
           <li>LCD TV with cable and HBO</li>
           <li>Free wireless &amp; wired internet</li>
         </ul>
@@ -119,21 +143,67 @@
       </div>
     </article>
 
-    <!-- Suite -->
-    <article id="suite" class="split section reveal" style="border-top: 1px solid var(--line);">
-      <div class="split__media"><img src="./assets/images/breakfast.jpg" alt="Open, inviting breakfast area at Syracuse Grand" loading="lazy"/></div>
+    <!-- Two Queen Suite -->
+    <article id="two-queen-suite" class="split section reveal" style="border-top: 1px solid var(--line);">
+      <div class="split__media"><img src="./assets/images/room-two-queen-suite.jpg" alt="Spacious Two Queen Suite with two queen beds and sitting area at Syracuse Grand hotel" loading="lazy"/></div>
       <div>
-        <p class="eyebrow">Extra Space</p>
-        <h2 class="serif" style="margin: 16px 0 20px;">Suite Accommodations</h2>
-        <p>For longer stays, family travel, or anyone who simply wants more room to spread out — our suites pair the comforts of our standard rooms with extra living space and storage.</p>
+        <p class="eyebrow">Suite · Family Favorite</p>
+        <h2 class="serif" style="margin: 16px 0 20px;">Two Queen Suite</h2>
+        <p>Two queen beds in a generously sized suite with extra living space — perfect for families, longer stays, or anyone who wants room to spread out. The space comfortably handles luggage, gear, and a separate area to relax.</p>
         <ul class="spec-list">
-          <li>Generous square footage with a separate seating area</li>
-          <li>Refrigerator, coffee/tea maker</li>
+          <li>Sleeps up to 4 with extra space to spread out</li>
+          <li>Two queen beds with plush bedding</li>
+          <li>Separate seating area</li>
+          <li>Refrigerator and coffee/tea maker</li>
           <li>LCD TV with cable and HBO</li>
           <li>Work desk, free wireless &amp; wired internet</li>
-          <li>Ideal for extended stays</li>
         </ul>
-        <a class="btn btn--gold" data-booking href="#" style="margin-top: 28px;">Book a Suite
+        <a class="btn btn--gold" data-booking href="#" style="margin-top: 28px;">Book a Two Queen Suite
+          <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </article>
+
+    <!-- King Suite -->
+    <article id="king-suite" class="split split--reverse section reveal" style="border-top: 1px solid var(--line);">
+      <div class="split__media"><img src="./assets/images/room-king-suite.jpg" alt="King Suite with king bed and separate sitting area at Syracuse Grand hotel" loading="lazy"/></div>
+      <div>
+        <p class="eyebrow">Suite · Business &amp; Extended Stay</p>
+        <h2 class="serif" style="margin: 16px 0 20px;">King Suite</h2>
+        <p>One king bed paired with a separate sitting area — the right pick when you want extra room to work, host a small meeting, or simply unwind in your own space at the end of the day.</p>
+        <ul class="spec-list">
+          <li>Sleeps up to 2 in extended comfort</li>
+          <li>One king bed with plush bedding</li>
+          <li>Separate sitting area with sofa</li>
+          <li>Work desk and ergonomic chair</li>
+          <li>Refrigerator and coffee/tea maker</li>
+          <li>LCD TV with cable and HBO, free Wi-Fi</li>
+        </ul>
+        <a class="btn btn--gold" data-booking href="#" style="margin-top: 28px;">Book a King Suite
+          <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </article>
+
+    <!-- King Jacuzzi (premium) -->
+    <article id="jacuzzi" class="split section reveal" style="border-top: 1px solid var(--line); position: relative;">
+      <div class="split__media" style="position: relative;">
+        <img src="./assets/images/room-king-jacuzzi.jpg" alt="King Jacuzzi room with king bed and in-room two-person jacuzzi tub at Syracuse Grand hotel" loading="lazy"/>
+        <div style="position: absolute; top: 16px; left: 16px; background: var(--gold); color: var(--navy-deep); padding: 8px 14px; border-radius: 999px; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;">Only 2 in the hotel</div>
+      </div>
+      <div>
+        <p class="eyebrow" style="color: var(--gold-deep);">Premium · Romantic Getaway</p>
+        <h2 class="serif" style="margin: 16px 0 20px;">King Jacuzzi Room</h2>
+        <p>Our two most-requested rooms. A king bed paired with an in-room two-person jacuzzi tub — ideal for anniversaries, birthdays, honeymoons, and special weekends in Central New York. Reserve early; with only two of these in the hotel, they go quickly on weekends.</p>
+        <ul class="spec-list">
+          <li>Sleeps up to 2</li>
+          <li>One king bed with plush bedding</li>
+          <li><strong>In-room two-person jacuzzi tub</strong></li>
+          <li>Refrigerator and coffee/tea maker</li>
+          <li>LCD TV with cable and HBO</li>
+          <li>Free wireless &amp; wired internet</li>
+        </ul>
+        <a class="btn btn--gold" data-booking href="#" style="margin-top: 28px;">Reserve a King Jacuzzi
           <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
         </a>
       </div>
