@@ -57,6 +57,49 @@ function rateLimit(req, res, next) {
   next();
 }
 
+/* ---------- Resend HTTPS API (preferred — Railway blocks outbound SMTP) ----------
+   Set RESEND_API_KEY to send via HTTPS POST to api.resend.com instead of SMTP.
+   Falls back to nodemailer/SMTP if RESEND_API_KEY isn't set.
+*/
+function usingResendApi() {
+  return !!process.env.RESEND_API_KEY;
+}
+async function sendViaResend({ from, to, replyTo, subject, text, html }) {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) throw new Error('RESEND_API_KEY not set');
+
+  const payload = {
+    from,
+    to: Array.isArray(to) ? to : [to],
+    subject,
+    text,
+    html,
+  };
+  if (replyTo) payload.reply_to = replyTo;
+
+  const r = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${apiKey}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  });
+
+  const bodyText = await r.text();
+  let json = null;
+  try { json = JSON.parse(bodyText); } catch (_) {}
+
+  if (!r.ok) {
+    const err = new Error(`Resend API ${r.status}: ${(json && json.message) || bodyText.slice(0, 200)}`);
+    err.code = 'RESEND_API_ERROR';
+    err.status = r.status;
+    err.responseBody = json || bodyText;
+    throw err;
+  }
+  return json;
+}
+
 /* ---------- SMTP transporter (lazy) ---------- */
 let _transporter = null;
 function getTransporter() {
@@ -105,12 +148,35 @@ app.get('/api/health', (req, res) => {
 app.get('/api/smtp-verify', async (req, res) => {
   const key = process.env.DIAG_KEY;
   if (!key || req.query.key !== key) return res.status(404).json({ ok: false });
+
+  // If using Resend HTTPS API, ping their /domains endpoint to verify the API key works.
+  if (usingResendApi()) {
+    try {
+      const r = await fetch('https://api.resend.com/domains', {
+        headers: { 'Authorization': `Bearer ${process.env.RESEND_API_KEY}` },
+      });
+      const body = await r.text();
+      let json = null; try { json = JSON.parse(body); } catch (_) {}
+      return res.json({
+        ok: r.ok,
+        mode: 'resend-https-api',
+        status: r.status,
+        from: process.env.SMTP_FROM || null,
+        to: process.env.SMTP_TO || null,
+        response: json || body.slice(0, 300),
+      });
+    } catch (err) {
+      return res.json({ ok: false, mode: 'resend-https-api', error: err.message });
+    }
+  }
+
   const t = getTransporter();
   if (!t) return res.json({ ok: false, error: 'SMTP not configured' });
   try {
     const ok = await t.verify();
     res.json({
       ok,
+      mode: 'smtp',
       host: process.env.SMTP_HOST,
       port: Number(process.env.SMTP_PORT || 587),
       secure: String(process.env.SMTP_SECURE || 'false').toLowerCase() === 'true',
@@ -121,6 +187,7 @@ app.get('/api/smtp-verify', async (req, res) => {
   } catch (err) {
     res.json({
       ok: false,
+      mode: 'smtp',
       code: err.code,
       command: err.command,
       response: err.response,
@@ -162,10 +229,12 @@ app.post('/api/contact', rateLimit, async (req, res) => {
       return res.status(400).json({ ok: false, error: 'Please include a short message.' });
     }
 
-    const transporter = getTransporter();
-    if (!transporter) {
-      console.error('SMTP not configured — set SMTP_HOST/SMTP_USER/SMTP_PASS env vars on Railway.');
-      return res.status(503).json({ ok: false, error: 'Email service is not configured. Please call (315) 701-4400.' });
+    if (!usingResendApi()) {
+      const transporter = getTransporter();
+      if (!transporter) {
+        console.error('Email service not configured — set RESEND_API_KEY (preferred) or SMTP_* env vars on Railway.');
+        return res.status(503).json({ ok: false, error: 'Email service is not configured. Please call (315) 701-4400.' });
+      }
     }
 
     const to = process.env.SMTP_TO || 'sales@syracusegrand.com';
@@ -211,21 +280,30 @@ app.post('/api/contact', rateLimit, async (req, res) => {
       </div>
     `;
 
-    await transporter.sendMail({
-      from,
-      to,
-      replyTo: `"${name}" <${email}>`,
-      subject: `[Syracuse Grand] ${subject} — ${name}`,
-      text,
-      html,
-    });
+    const fullSubject = `[Syracuse Grand] ${subject} — ${name}`;
+    const replyTo = `"${name}" <${email}>`;
+
+    if (usingResendApi()) {
+      await sendViaResend({ from, to, replyTo, subject: fullSubject, text, html });
+    } else {
+      await getTransporter().sendMail({
+        from,
+        to,
+        replyTo,
+        subject: fullSubject,
+        text,
+        html,
+      });
+    }
 
     res.json({ ok: true });
   } catch (err) {
     console.error('contact form error:', {
       code: err.code,
       command: err.command,
+      status: err.status,
       response: err.response,
+      responseBody: err.responseBody,
       responseCode: err.responseCode,
       message: err.message,
     });
