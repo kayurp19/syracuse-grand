@@ -1,7 +1,17 @@
-# Tiny static-site image for Railway (Caddy serves the files directly)
-FROM caddy:2-alpine
+# Syracuse Grand — Node 20 Alpine image (static site + /api/contact)
+FROM node:20-alpine
+
 WORKDIR /srv
-COPY . /srv
-COPY Caddyfile /etc/caddy/Caddyfile
+
+# Install production deps first for better layer caching
+COPY package.json package-lock.json* ./
+RUN npm install --omit=dev --no-audit --no-fund
+
+# App source
+COPY . .
+
+ENV NODE_ENV=production
+ENV PORT=8080
 EXPOSE 8080
-CMD ["caddy", "run", "--config", "/etc/caddy/Caddyfile", "--adapter", "caddyfile"]
+
+CMD ["node", "server.js"]

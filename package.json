@@ -1,0 +1,17 @@
+{
+  "name": "syracuse-grand",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Syracuse Grand hotel website (Liverpool, NY) — static site + contact form API.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "nodemailer": "^6.9.16"
+  }
+}
