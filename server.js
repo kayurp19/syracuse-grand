@@ -10,7 +10,7 @@
  *   SMTP_USER       e.g. hotel@syracusegrand.com
  *   SMTP_PASS       SMTP password / app password
  *   SMTP_FROM       e.g. "Syracuse Grand <hotel@syracusegrand.com>"
- *   SMTP_TO         e.g. sales@sundhm.com
+ *   SMTP_TO         e.g. sales@syracusegrand.com (auto-forwards to sales@sundhm.com)
  *   SMTP_SECURE     "true" for port 465, otherwise "false" (STARTTLS on 587)
  *
  * Optional:
@@ -162,7 +162,7 @@ app.post('/api/contact', rateLimit, async (req, res) => {
       return res.status(503).json({ ok: false, error: 'Email service is not configured. Please call (315) 701-4400.' });
     }
 
-    const to = process.env.SMTP_TO || 'sales@sundhm.com';
+    const to = process.env.SMTP_TO || 'sales@syracusegrand.com';
     const from = process.env.SMTP_FROM || `"Syracuse Grand Website" <${process.env.SMTP_USER}>`;
     const ip = (req.ip || '').toString();
 
