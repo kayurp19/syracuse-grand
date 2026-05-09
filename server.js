@@ -69,6 +69,12 @@ function getTransporter() {
     port: Number(process.env.SMTP_PORT || 587),
     secure: String(process.env.SMTP_SECURE || 'false').toLowerCase() === 'true',
     auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
+    // Fail fast instead of hanging forever if the SMTP host is unreachable.
+    connectionTimeout: 15000,
+    greetingTimeout: 15000,
+    socketTimeout: 20000,
+    requireTLS: String(process.env.SMTP_REQUIRE_TLS || 'false').toLowerCase() === 'true',
+    tls: { servername: process.env.SMTP_HOST },
   });
   return _transporter;
 }
