@@ -1297,3 +1297,195 @@ a.contact-method__value:hover { color: #b08940; }
   .contact-send { justify-content: center; }
   .contact-method__value { font-size: 1.25rem; }
 }
+
+/* ============================================================
+   BEST-RATE BANNER (site-wide direct-book strip)
+   Injected by includes.js as the very first body element.
+   Sits ABOVE the fixed header. We push the header down by
+   banner height via the body class .has-rate-banner.
+   ============================================================ */
+.rate-banner {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  background: linear-gradient(90deg, var(--navy-deep) 0%, var(--navy) 50%, var(--navy-deep) 100%);
+  color: #fff;
+  font-size: 13.5px;
+  letter-spacing: 0.02em;
+  z-index: 110;
+  border-bottom: 1px solid rgba(212, 160, 59, 0.35);
+}
+/* Push header down when banner is on. JS toggles .has-rate-banner on <body>. */
+body.has-rate-banner .header { top: 38px; }
+@media (max-width: 600px) {
+  body.has-rate-banner .header { top: 64px; }
+}
+.rate-banner__inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 9px 48px 9px 24px;
+  text-align: center;
+  flex-wrap: wrap;
+}
+.rate-banner__text { color: #fff; }
+.rate-banner__text strong { color: var(--gold-bright); font-weight: 600; }
+.rate-banner__cta {
+  color: var(--gold-bright);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(230, 180, 83, 0.45);
+  transition: color .15s;
+  white-space: nowrap;
+}
+.rate-banner__cta:hover { color: #fff; border-bottom-color: #fff; }
+.rate-banner__close {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255,255,255,.65);
+  padding: 4px;
+  line-height: 0;
+}
+.rate-banner__close:hover { color: #fff; }
+@media (max-width: 600px) {
+  .rate-banner__inner { font-size: 12.5px; padding: 8px 40px 8px 16px; gap: 8px; }
+}
+
+/* ============================================================
+   LANDING PAGE TEMPLATE (used by /hotels-near-* and /packages)
+   Light hero + content sections. Reuses .poi-card / .drive-card.
+   ============================================================ */
+.lp-hero {
+  position: relative;
+  min-height: 56vh;
+  display: flex;
+  align-items: flex-end;
+  padding: clamp(80px, 12vh, 140px) 0 clamp(40px, 6vh, 64px);
+  background: var(--navy-deep);
+  color: #fff;
+  overflow: hidden;
+}
+.lp-hero__bg { position: absolute; inset: 0; z-index: 0; }
+.lp-hero__bg img { width: 100%; height: 100%; object-fit: cover; opacity: 0.55; }
+.lp-hero__bg::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(18,39,73,.35) 0%, rgba(18,39,73,.85) 100%);
+}
+.lp-hero__content { position: relative; z-index: 2; max-width: 800px; }
+.lp-hero h1 { color: #fff; font-size: clamp(34px, 5vw, 60px); margin-bottom: 18px; }
+.lp-hero p.lead { color: rgba(255,255,255,.92); max-width: 620px; }
+.lp-hero .eyebrow { color: var(--gold-bright); }
+.lp-hero__cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+
+.lp-key {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-top: 32px;
+  padding: 24px;
+  background: var(--cream);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+}
+.lp-key__item { text-align: center; }
+.lp-key__item .num {
+  display: block;
+  font-family: var(--serif);
+  font-size: clamp(28px, 3.6vw, 40px);
+  color: var(--navy-deep);
+  font-weight: 500;
+  line-height: 1;
+}
+.lp-key__item .label {
+  display: block;
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  letter-spacing: 0.04em;
+  margin-top: 6px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.lp-prose { max-width: 72ch; }
+.lp-prose p { color: var(--ink-soft); margin: 0 0 18px; line-height: 1.75; }
+.lp-prose h3 { margin-top: 36px; margin-bottom: 14px; color: var(--navy-deep); }
+.lp-prose ul { padding-left: 22px; color: var(--ink-soft); line-height: 1.8; }
+.lp-prose ul li { margin-bottom: 6px; }
+
+/* ============================================================
+   PACKAGES GRID
+   ============================================================ */
+.pkg-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+@media (min-width: 720px) { .pkg-grid { grid-template-columns: repeat(2, 1fr); } }
+.pkg-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform .25s var(--ease), box-shadow .25s var(--ease), border-color .25s;
+}
+.pkg-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: var(--line-strong); }
+.pkg-card__media { aspect-ratio: 16/9; background: var(--bg-soft); overflow: hidden; }
+.pkg-card__media img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s var(--ease); }
+.pkg-card:hover .pkg-card__media img { transform: scale(1.04); }
+.pkg-card__body { padding: 26px 26px 28px; flex: 1; display: flex; flex-direction: column; }
+.pkg-card__tag {
+  display: inline-block;
+  font-size: 11.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--gold-deep);
+  margin-bottom: 10px;
+}
+.pkg-card h3 { font-size: 26px; color: var(--navy-deep); margin-bottom: 12px; }
+.pkg-card__price {
+  font-family: var(--serif);
+  font-size: 22px;
+  color: var(--navy);
+  margin-bottom: 14px;
+}
+.pkg-card__price small { font-size: 13px; color: var(--muted); font-family: var(--sans); margin-left: 4px; }
+.pkg-card__desc { color: var(--ink-soft); line-height: 1.65; margin-bottom: 18px; }
+.pkg-card__includes {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 22px;
+  font-size: 14.5px;
+  color: var(--ink-soft);
+}
+.pkg-card__includes li {
+  padding: 6px 0 6px 22px;
+  position: relative;
+  border-top: 1px solid var(--line);
+  line-height: 1.5;
+}
+.pkg-card__includes li:first-child { border-top: none; }
+.pkg-card__includes li::before {
+  content: "";
+  position: absolute;
+  left: 2px; top: 13px;
+  width: 12px; height: 6px;
+  border-left: 2px solid var(--gold);
+  border-bottom: 2px solid var(--gold);
+  transform: rotate(-45deg);
+}
+.pkg-card__cta { margin-top: auto; display: flex; gap: 10px; flex-wrap: wrap; }
+.pkg-disclaimer {
+  margin-top: 28px;
+  padding: 18px 22px;
+  background: var(--bg-soft);
+  border-left: 3px solid var(--gold);
+  border-radius: 6px;
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}

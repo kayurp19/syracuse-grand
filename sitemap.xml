@@ -43,6 +43,30 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://www.syracusegrand.com/packages</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.syracusegrand.com/hotels-near-syracuse-airport</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.syracusegrand.com/hotels-near-destiny-usa</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.syracusegrand.com/hotels-near-micron-clay-ny</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://www.syracusegrand.com/contact</loc>
     <lastmod>2026-05-09</lastmod>
     <changefreq>monthly</changefreq>

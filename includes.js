@@ -18,11 +18,26 @@ const NAV = [
   { href: "/rooms",       label: "Rooms"      },
   { href: "/gallery",     label: "Gallery"    },
   { href: "/amenities",   label: "Amenities"  },
+  { href: "/packages",    label: "Packages"   },
   { href: "/meetings",    label: "Meetings"   },
   { href: "/groups",      label: "Groups"     },
   { href: "/local-area",  label: "Local Area" },
   { href: "/contact",     label: "Contact"    },
 ];
+
+// Site-wide best-rate banner (top strip)
+function renderRateBanner() {
+  return `
+  <div class="rate-banner" id="rateBanner" role="region" aria-label="Best rate guarantee">
+    <div class="rate-banner__inner">
+      <span class="rate-banner__text"><strong>Book direct and save</strong> &middot; best rate guaranteed, no booking fees.</span>
+      <a class="rate-banner__cta" href="${BOOKING_URL}" target="_blank" rel="noopener noreferrer">Reserve now &rarr;</a>
+      <button class="rate-banner__close" type="button" aria-label="Dismiss banner">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+  </div>`;
+}
 
 // Real Syracuse Grand logo mark — gold version for light bg, white version for dark bg.
 // CSS swaps which is visible based on header state (.header--transparent vs .header--solid).
@@ -85,6 +100,7 @@ function renderFooter() {
             <li><a href="/rooms">Rooms</a></li>
             <li><a href="/gallery">Gallery</a></li>
             <li><a href="/amenities">Amenities</a></li>
+            <li><a href="/packages">Packages</a></li>
             <li><a href="/meetings">Meetings</a></li>
             <li><a href="/groups">Groups</a></li>
           </ul>
@@ -93,6 +109,9 @@ function renderFooter() {
           <h4>Explore</h4>
           <ul>
             <li><a href="/local-area">Local Area &amp; Syracuse Guide</a></li>
+            <li><a href="/hotels-near-syracuse-airport">Near Syracuse Airport</a></li>
+            <li><a href="/hotels-near-destiny-usa">Near Destiny USA</a></li>
+            <li><a href="/hotels-near-micron-clay-ny">Near Micron / Clay</a></li>
             <li><a href="/contact">Contact</a></li>
             <li><a href="${BOOKING_URL}" target="_blank" rel="noopener noreferrer">Book Now</a></li>
           </ul>
@@ -126,8 +145,28 @@ function renderFooter() {
   const headerSlot = document.querySelector('[data-include="header"]');
   const footerSlot = document.querySelector('[data-include="footer"]');
   const transparent = headerSlot && headerSlot.dataset.transparent === "true";
+
+  // Site-wide best-rate banner — sits ABOVE the header on every page.
+  // Skipped if user already dismissed it this session, or if page opts out.
+  const skipBanner = document.body.dataset.banner === "off";
+  const dismissed  = sessionStorage.getItem("sg_banner_dismissed") === "1";
+  if (headerSlot && !skipBanner && !dismissed) {
+    headerSlot.insertAdjacentHTML("beforebegin", renderRateBanner());
+    document.body.classList.add("has-rate-banner");
+  }
+
   if (headerSlot) headerSlot.outerHTML = renderHeader(transparent);
   if (footerSlot) footerSlot.outerHTML = renderFooter();
+
+  // Banner dismiss
+  const banner = document.getElementById("rateBanner");
+  if (banner) {
+    banner.querySelector(".rate-banner__close").addEventListener("click", () => {
+      banner.style.display = "none";
+      document.body.classList.remove("has-rate-banner");
+      try { sessionStorage.setItem("sg_banner_dismissed", "1"); } catch (e) {}
+    });
+  }
 
   // Replace any [data-booking] href placeholders with the live booking URL
   document.querySelectorAll('[data-booking]').forEach(a => {
