@@ -204,8 +204,17 @@ app.post('/api/contact', rateLimit, async (req, res) => {
   try {
     const body = req.body || {};
 
-    // Honeypot — bots fill hidden "company_website" field
-    if (clean(body.company_website)) {
+    // Honeypot — bots fill hidden field. Accept both old & new field names.
+    const hpValue = clean(body.sg_hp_token) || clean(body.company_website);
+    if (hpValue) {
+      console.warn('contact form honeypot triggered:', {
+        ip: req.ip,
+        userAgent: req.get('user-agent'),
+        sg_hp_token: clean(body.sg_hp_token).slice(0, 60),
+        company_website: clean(body.company_website).slice(0, 60),
+        name: clean(body.name).slice(0, 40),
+        email: clean(body.email).slice(0, 60),
+      });
       return res.json({ ok: true }); // silent success
     }
 
