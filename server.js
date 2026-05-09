@@ -333,6 +333,39 @@ function setCaching(res, filePath) {
   }
 }
 
+/* ---------- Clean URLs ----------
+   Strategy:
+     1. Permanent redirects from old `/syracuse-guide.html` → `/local-area`
+        and `/syracuse-guide` → `/local-area` (the merged page lives at /local-area).
+     2. 301 every `/<page>.html` → `/<page>` to canonicalize URLs (preserves SEO
+        because the redirect is permanent and a single hop).
+     3. The static middleware below already serves `/<page>` from `<page>.html`
+        via `extensions: ['html']`, so we don't need to rename any files.
+*/
+const MERGED_REDIRECTS = {
+  '/syracuse-guide.html': '/local-area',
+  '/syracuse-guide': '/local-area',
+};
+app.get('*', (req, res, next) => {
+  // 1. Old guide → merged page
+  if (MERGED_REDIRECTS[req.path]) {
+    return res.redirect(301, MERGED_REDIRECTS[req.path]);
+  }
+  // 2. Strip `.html` from any other page — except blog posts (kept as-is for now)
+  //    and except files that don't actually exist (let the 404 handler deal).
+  if (/\.html$/i.test(req.path) && !req.path.startsWith('/blog/')) {
+    const candidate = path.join(ROOT, req.path.replace(/^\//, ''));
+    if (fs.existsSync(candidate) && candidate.startsWith(ROOT)) {
+      const clean = req.path.replace(/\.html$/i, '');
+      // Index special-case: /index.html → /
+      const target = clean === '/index' ? '/' : clean;
+      const qs = req.url.includes('?') ? req.url.slice(req.url.indexOf('?')) : '';
+      return res.redirect(301, target + qs);
+    }
+  }
+  next();
+});
+
 /* ---------- Serve static files (with .html fallback like Caddy try_files) ---------- */
 app.use(express.static(ROOT, {
   extensions: ['html'],

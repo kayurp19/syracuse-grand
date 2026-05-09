@@ -14,15 +14,14 @@ const ADDRESS_1   = "136 Transistor Pkwy";
 const ADDRESS_2   = "Liverpool, NY 13088";
 
 const NAV = [
-  { href: "index.html",      label: "Home"       },
-  { href: "rooms.html",      label: "Rooms"      },
-  { href: "gallery.html",    label: "Gallery"    },
-  { href: "amenities.html",  label: "Amenities"  },
-  { href: "meetings.html",   label: "Meetings"   },
-  { href: "groups.html",     label: "Groups"     },
-  { href: "local-area.html", label: "Local Area" },
-  { href: "syracuse-guide.html", label: "Syracuse Guide" },
-  { href: "contact.html",    label: "Contact"    },
+  { href: "/",            label: "Home"       },
+  { href: "/rooms",       label: "Rooms"      },
+  { href: "/gallery",     label: "Gallery"    },
+  { href: "/amenities",   label: "Amenities"  },
+  { href: "/meetings",    label: "Meetings"   },
+  { href: "/groups",      label: "Groups"     },
+  { href: "/local-area",  label: "Local Area" },
+  { href: "/contact",     label: "Contact"    },
 ];
 
 // Real Syracuse Grand logo mark — gold version for light bg, white version for dark bg.
@@ -38,7 +37,7 @@ function renderHeader(transparent = false) {
   return `
   <header class="${cls}" ${transparent ? '' : 'data-solid="true"'}>
     <div class="container header__inner">
-      <a href="index.html" class="header__logo" aria-label="Syracuse Grand home">
+      <a href="/" class="header__logo" aria-label="Syracuse Grand home">
         <span class="header__logo-mark">${LOGO_IMG}</span>
         <span class="header__logo-text">SYRACUSE GRAND</span>
       </a>
@@ -66,7 +65,7 @@ function renderFooter() {
     <div class="container">
       <div class="footer__grid">
         <div>
-          <a href="index.html" class="footer__logo">
+          <a href="/" class="footer__logo">
             <span class="footer__logo-mark"><img src="./assets/images/logo-mark.png" alt="Syracuse Grand" width="36" height="50"></span>
             <span class="footer__logo-text">SYRACUSE GRAND</span>
           </a>
@@ -83,31 +82,30 @@ function renderFooter() {
         <div>
           <h4>Stay</h4>
           <ul>
-            <li><a href="rooms.html">Rooms</a></li>
-            <li><a href="gallery.html">Gallery</a></li>
-            <li><a href="amenities.html">Amenities</a></li>
-            <li><a href="meetings.html">Meetings</a></li>
-            <li><a href="groups.html">Groups</a></li>
+            <li><a href="/rooms">Rooms</a></li>
+            <li><a href="/gallery">Gallery</a></li>
+            <li><a href="/amenities">Amenities</a></li>
+            <li><a href="/meetings">Meetings</a></li>
+            <li><a href="/groups">Groups</a></li>
           </ul>
         </div>
         <div>
           <h4>Explore</h4>
           <ul>
-            <li><a href="local-area.html">Local Area</a></li>
-            <li><a href="syracuse-guide.html">Syracuse Guide</a></li>
-            <li><a href="contact.html">Contact</a></li>
+            <li><a href="/local-area">Local Area &amp; Syracuse Guide</a></li>
+            <li><a href="/contact">Contact</a></li>
             <li><a href="${BOOKING_URL}" target="_blank" rel="noopener noreferrer">Book Now</a></li>
           </ul>
         </div>
       </div>
       <div class="footer__legal-row">
-        <a href="privacy.html">Privacy Policy</a>
+        <a href="/privacy">Privacy Policy</a>
         <span class="footer__legal-sep">·</span>
-        <a href="terms.html">Terms of Use</a>
+        <a href="/terms">Terms of Use</a>
         <span class="footer__legal-sep">·</span>
-        <a href="cookies.html">Cookie Policy</a>
+        <a href="/cookies">Cookie Policy</a>
         <span class="footer__legal-sep">·</span>
-        <a href="accessibility.html">Accessibility</a>
+        <a href="/accessibility">Accessibility</a>
         <span class="footer__legal-sep">·</span>
         <a href="#" data-cookie-settings>Cookie Settings</a>
       </div>
