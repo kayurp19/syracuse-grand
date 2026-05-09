@@ -92,6 +92,40 @@ app.get('/api/health', (req, res) => {
   res.json({ ok: true, smtpConfigured: !!getTransporter() });
 });
 
+/* ---------- SMTP verify (diagnostic) ----------
+   Hit /api/smtp-verify?key=<DIAG_KEY> to verify SMTP connectivity & auth.
+   Set DIAG_KEY env var to enable. Returns nodemailer's verify() result.
+*/
+app.get('/api/smtp-verify', async (req, res) => {
+  const key = process.env.DIAG_KEY;
+  if (!key || req.query.key !== key) return res.status(404).json({ ok: false });
+  const t = getTransporter();
+  if (!t) return res.json({ ok: false, error: 'SMTP not configured' });
+  try {
+    const ok = await t.verify();
+    res.json({
+      ok,
+      host: process.env.SMTP_HOST,
+      port: Number(process.env.SMTP_PORT || 587),
+      secure: String(process.env.SMTP_SECURE || 'false').toLowerCase() === 'true',
+      user: process.env.SMTP_USER,
+      from: process.env.SMTP_FROM || null,
+      to: process.env.SMTP_TO || null,
+    });
+  } catch (err) {
+    res.json({
+      ok: false,
+      code: err.code,
+      command: err.command,
+      response: err.response,
+      responseCode: err.responseCode,
+      message: err.message,
+      host: process.env.SMTP_HOST,
+      port: Number(process.env.SMTP_PORT || 587),
+    });
+  }
+});
+
 /* ---------- POST /api/contact ---------- */
 app.post('/api/contact', rateLimit, async (req, res) => {
   try {
@@ -182,7 +216,13 @@ app.post('/api/contact', rateLimit, async (req, res) => {
 
     res.json({ ok: true });
   } catch (err) {
-    console.error('contact form error:', err);
+    console.error('contact form error:', {
+      code: err.code,
+      command: err.command,
+      response: err.response,
+      responseCode: err.responseCode,
+      message: err.message,
+    });
     res.status(500).json({ ok: false, error: 'Something went wrong sending your message. Please call (315) 701-4400.' });
   }
 });
