@@ -1080,13 +1080,18 @@ a.contact-method__value:hover { color: #b08940; }
 .contact-method__sublink {
   display: inline-block;
   margin-top: 6px;
-  font-size: 13px;
-  color: #b08940;
+  font-size: 14px;
+  color: #1d2540;
   text-decoration: none;
-  font-weight: 600;
-  letter-spacing: .01em;
+  font-weight: 500;
+  letter-spacing: 0;
+  border-bottom: 1px solid rgba(176,137,64,.4);
+  padding-bottom: 1px;
 }
-.contact-method__sublink:hover { text-decoration: underline; }
+.contact-method__sublink:hover {
+  color: #b08940;
+  border-bottom-color: #b08940;
+}
 .contact-method__note {
   margin: 4px 0 0;
   color: #6b7080;
