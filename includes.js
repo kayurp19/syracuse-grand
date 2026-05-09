@@ -21,7 +21,7 @@ const NAV = [
   { href: "meetings.html",   label: "Meetings"   },
   { href: "groups.html",     label: "Groups"     },
   { href: "local-area.html", label: "Local Area" },
-  { href: "blog/index.html", label: "Journal"    },
+  { href: "syracuse-guide.html", label: "Syracuse Guide" },
   { href: "contact.html",    label: "Contact"    },
 ];
 
@@ -94,14 +94,25 @@ function renderFooter() {
           <h4>Explore</h4>
           <ul>
             <li><a href="local-area.html">Local Area</a></li>
-            <li><a href="blog/index.html">Journal</a></li>
+            <li><a href="syracuse-guide.html">Syracuse Guide</a></li>
             <li><a href="contact.html">Contact</a></li>
             <li><a href="${BOOKING_URL}" target="_blank" rel="noopener noreferrer">Book Now</a></li>
           </ul>
         </div>
       </div>
+      <div class="footer__legal-row">
+        <a href="privacy.html">Privacy Policy</a>
+        <span class="footer__legal-sep">·</span>
+        <a href="terms.html">Terms of Use</a>
+        <span class="footer__legal-sep">·</span>
+        <a href="cookies.html">Cookie Policy</a>
+        <span class="footer__legal-sep">·</span>
+        <a href="accessibility.html">Accessibility</a>
+        <span class="footer__legal-sep">·</span>
+        <a href="#" data-cookie-settings>Cookie Settings</a>
+      </div>
       <div class="footer__bottom">
-        <span>© <span data-year></span> Syracuse Grand. All rights reserved.</span>
+        <span>© <span data-year></span> Syracuse Grand, operated by Kevidco LLC. All rights reserved.</span>
         <span>Liverpool, New York · Central NY</span>
       </div>
     </div>
