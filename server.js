@@ -343,8 +343,29 @@ function setCaching(res, filePath) {
         via `extensions: ['html']`, so we don't need to rename any files.
 */
 const MERGED_REDIRECTS = {
+  // Old syracuse-guide page merged into local-area
   '/syracuse-guide.html': '/local-area',
   '/syracuse-guide': '/local-area',
+
+  // Legacy .php URLs from the previous LET Group / pre-rebrand site.
+  // These are still indexed in Google (Apr-May 2026 crawl) and likely
+  // have backlinks from Booking.com, TripAdvisor, directory sites, and
+  // partner pages. Permanent 301s pass link equity to the new pages.
+  '/liverpool-accommodations.php':   '/rooms',
+  '/liverpool-amenities.php':        '/amenities',
+  '/liverpool-meetings.php':         '/meetings',
+  '/liverpool-hotel-group-travel.php': '/groups',
+  '/liverpool-dining.php':           '/local-area',
+  '/liverpool-area-guide.php':       '/local-area',
+  '/location.php':                   '/contact',
+  '/specials.php':                   '/packages',
+  '/gallery.php':                    '/gallery',
+  '/index.php':                      '/',
+  '/home.php':                       '/',
+  '/contact.php':                    '/contact',
+  '/rooms.php':                      '/rooms',
+  '/amenities.php':                  '/amenities',
+  '/meetings.php':                   '/meetings',
 };
 app.get('*', (req, res, next) => {
   // 1. Old guide → merged page
