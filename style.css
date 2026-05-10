@@ -1489,3 +1489,79 @@ body.has-rate-banner .header { top: 38px; }
   color: var(--ink-soft);
   line-height: 1.6;
 }
+
+/* ============================================================
+   POI CARDS — used on landing pages, homepage Reviews, link mesh
+   Promoted from local-area.html inline CSS so it works everywhere.
+   ============================================================ */
+.poi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+.poi-card {
+  background: #fff;
+  border: 1px solid rgba(0,0,0,.07);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform .2s, box-shadow .2s;
+  display: flex;
+  flex-direction: column;
+}
+.poi-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 32px rgba(15,30,55,.10);
+}
+.poi-card__media { aspect-ratio: 16 / 10; overflow: hidden; background: #1d2540; }
+.poi-card__media img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  transition: transform .4s ease;
+}
+.poi-card:hover .poi-card__media img { transform: scale(1.04); }
+.poi-card__body { padding: 18px 22px 22px; }
+.poi-card__meta,
+.poi-card__tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--gold-deep, #b08940);
+  margin-bottom: 8px;
+}
+.poi-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  color: var(--navy-deep, #1d2540);
+  margin: 0 0 8px;
+}
+.poi-card p { color: var(--ink-soft, #4a5168); font-size: 14px; line-height: 1.65; margin: 0; }
+
+/* Drive-times mini grid (also referenced by mega-page) */
+.drive-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+.drive-card {
+  background: #fff;
+  border: 1px solid rgba(0,0,0,.07);
+  border-radius: 10px;
+  padding: 18px 20px;
+}
+.drive-card .tag {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--gold-deep, #b08940);
+  margin-bottom: 6px;
+}
+.drive-card h4 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  color: var(--navy-deep, #1d2540);
+  margin: 0 0 4px;
+}
+.drive-card p { color: var(--ink-soft, #4a5168); font-size: 13px; margin: 0; }

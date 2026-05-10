@@ -106,14 +106,20 @@ function renderFooter() {
           </ul>
         </div>
         <div>
-          <h4>Explore</h4>
+          <h4>Hotels in Syracuse</h4>
           <ul>
-            <li><a href="/local-area">Local Area &amp; Syracuse Guide</a></li>
+            <li><a href="/hotels-syracuse-ny">Hotels in Syracuse, NY</a></li>
             <li><a href="/hotels-near-syracuse-airport">Near Syracuse Airport</a></li>
             <li><a href="/hotels-near-destiny-usa">Near Destiny USA</a></li>
+            <li><a href="/hotels-near-syracuse-university">Near Syracuse University</a></li>
+            <li><a href="/hotels-near-jma-wireless-dome">Near JMA Wireless Dome</a></li>
+            <li><a href="/hotels-near-upstate-medical">Near Upstate Medical</a></li>
+            <li><a href="/hotels-near-nys-fairgrounds">Near NYS Fairgrounds</a></li>
+            <li><a href="/hotels-near-empower-amphitheater">Near Empower Amphitheater</a></li>
             <li><a href="/hotels-near-micron-clay-ny">Near Micron / Clay</a></li>
-            <li><a href="/contact">Contact</a></li>
-            <li><a href="${BOOKING_URL}" target="_blank" rel="noopener noreferrer">Book Now</a></li>
+            <li><a href="/hotels-cicero-ny">Cicero, NY</a></li>
+            <li><a href="/pet-friendly-hotels-syracuse">Pet-friendly hotels</a></li>
+            <li><a href="/local-area">Full Syracuse guide</a></li>
           </ul>
         </div>
       </div>
