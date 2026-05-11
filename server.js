@@ -367,6 +367,11 @@ const MERGED_REDIRECTS = {
   '/rooms.php':                      '/rooms',
   '/amenities.php':                  '/amenities',
   '/meetings.php':                   '/meetings',
+
+  // Retired SEO page — Cicero is not a Syracuse-area destination and
+  // conflicts with Cicero Grand's positioning. Redirect to homepage.
+  '/hotels-cicero-ny':               '/',
+  '/hotels-cicero-ny.html':          '/',
 };
 app.get('*', (req, res, next) => {
   // 1. Old guide → merged page

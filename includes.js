@@ -117,7 +117,6 @@ function renderFooter() {
             <li><a href="/hotels-near-nys-fairgrounds">Near NYS Fairgrounds</a></li>
             <li><a href="/hotels-near-empower-amphitheater">Near Empower Amphitheater</a></li>
             <li><a href="/hotels-near-micron-clay-ny">Near Micron / Clay</a></li>
-            <li><a href="/hotels-cicero-ny">Cicero, NY</a></li>
             <li><a href="/pet-friendly-hotels-syracuse">Pet-friendly hotels</a></li>
             <li><a href="/local-area">Full Syracuse guide</a></li>
           </ul>
