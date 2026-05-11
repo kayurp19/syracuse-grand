@@ -351,6 +351,7 @@ const MERGED_REDIRECTS = {
   // These are still indexed in Google (Apr-May 2026 crawl) and likely
   // have backlinks from Booking.com, TripAdvisor, directory sites, and
   // partner pages. Permanent 301s pass link equity to the new pages.
+  '/liverpool-hotel.php':            '/',
   '/liverpool-accommodations.php':   '/rooms',
   '/liverpool-amenities.php':        '/amenities',
   '/liverpool-meetings.php':         '/meetings',
