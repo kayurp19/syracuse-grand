@@ -135,6 +135,9 @@
   .place:first-child { border-top: none; padding-top: 4px; }
   .place__name { font-weight: 600; color: var(--ink); font-size: 16px; margin-bottom: 4px; }
   .place__meta { font-size: 13px; color: var(--ink-soft); opacity: 0.75; margin-bottom: 6px; }
+  .place__address { font-size: 13px; color: var(--ink-soft); margin-bottom: 6px; }
+  .place__address a { color: var(--accent); text-decoration: none; border-bottom: 1px dotted var(--accent); }
+  .place__address a:hover { opacity: 0.85; }
   .place__directions { font-size: 14px; color: var(--ink-soft); line-height: 1.6; }
 
   /* TV grid */
@@ -458,21 +461,25 @@
           <div class="place">
             <div class="place__name">Santangelo's Restaurant</div>
             <div class="place__meta">Italian · Local favorite</div>
+            <div class="place__address"><a href="https://www.google.com/maps/search/?api=1&query=Santangelo%27s+Restaurant+673+Old+Liverpool+Rd+Liverpool+NY+13088" target="_blank" rel="noopener noreferrer">673 Old Liverpool Rd, Liverpool, NY 13088</a></div>
             <div class="place__directions">Right out of the hotel, take a quick left onto Old Liverpool Rd. Santangelo's is about ½ mile down on the right.</div>
           </div>
           <div class="place">
             <div class="place__name">Ichiban Japanese Steakhouse</div>
             <div class="place__meta">Hibachi · Sushi</div>
+            <div class="place__address"><a href="https://www.google.com/maps/search/?api=1&query=Ichiban+Japanese+Steakhouse+302+Old+Liverpool+Rd+Liverpool+NY+13088" target="_blank" rel="noopener noreferrer">302 Old Liverpool Rd, Liverpool, NY 13088</a></div>
             <div class="place__directions">Right out of the hotel onto Old Liverpool Rd, about ¾ mile on the left.</div>
           </div>
           <div class="place">
             <div class="place__name">Gardenview Diner</div>
             <div class="place__meta">Diner · Breakfast & lunch</div>
+            <div class="place__address"><a href="https://www.google.com/maps/search/?api=1&query=Gardenview+Diner+650+Old+Liverpool+Rd+Liverpool+NY+13088" target="_blank" rel="noopener noreferrer">650 Old Liverpool Rd, Liverpool, NY 13088</a></div>
             <div class="place__directions">Right out of the hotel, follow Old Liverpool Rd to Buckley Rd — Gardenview is at the corner.</div>
           </div>
           <div class="place">
             <div class="place__name">Heid's of Liverpool</div>
             <div class="place__meta">Hot dogs · Local landmark</div>
+            <div class="place__address"><a href="https://www.google.com/maps/search/?api=1&query=Heid%27s+of+Liverpool+305+Oswego+St+Liverpool+NY+13088" target="_blank" rel="noopener noreferrer">305 Oswego St, Liverpool, NY 13088</a></div>
             <div class="place__directions">Right out of the hotel, follow Oswego Rd into the village of Liverpool. Heid's is on the right just past the village center.</div>
           </div>
 
@@ -480,31 +487,25 @@
           <div class="place">
             <div class="place__name">The Retreat</div>
             <div class="place__meta">American · Bar & grill</div>
+            <div class="place__address"><a href="https://www.google.com/maps/search/?api=1&query=The+Retreat+302+Vine+St+Liverpool+NY+13088" target="_blank" rel="noopener noreferrer">302 Vine St, Liverpool, NY 13088</a></div>
             <div class="place__directions">Right out of the hotel onto Old Liverpool Rd, then left onto Buckley Rd. The Retreat is on the right.</div>
-          </div>
-          <div class="place">
-            <div class="place__name">Limp Lizard Bar & Grill</div>
-            <div class="place__meta">BBQ · Smoked meats</div>
-            <div class="place__directions">Right out of the hotel, take Old Liverpool Rd to Buckley Rd, then left. Limp Lizard is on the right after about a mile.</div>
           </div>
           <div class="place">
             <div class="place__name">Dinosaur Bar-B-Que</div>
             <div class="place__meta">BBQ · Iconic Syracuse spot</div>
+            <div class="place__address"><a href="https://www.google.com/maps/search/?api=1&query=Dinosaur+Bar-B-Que+246+W+Willow+St+Syracuse+NY+13202" target="_blank" rel="noopener noreferrer">246 W Willow St, Syracuse, NY 13202</a></div>
             <div class="place__directions">Take I-690 East toward downtown Syracuse, exit at Franklin St. Dinosaur is on Willow St near the Inner Harbor.</div>
           </div>
           <div class="place">
             <div class="place__name">Tully's Good Times</div>
             <div class="place__meta">American · Tenders & wings</div>
-            <div class="place__directions">Right out of the hotel onto Old Liverpool Rd, follow to Rt. 31 — Tully's is in the Cicero/Liverpool corridor on the right.</div>
-          </div>
-          <div class="place">
-            <div class="place__name">Spaghetti Warehouse</div>
-            <div class="place__meta">Italian · Family-style</div>
-            <div class="place__directions">Take I-690 East to downtown Syracuse, exit at W. Genesee St. Located on Franklin St in Armory Square.</div>
+            <div class="place__address"><a href="https://www.google.com/maps/search/?api=1&query=Tully%27s+Good+Times+2943+Erie+Blvd+E+Syracuse+NY+13224" target="_blank" rel="noopener noreferrer">2943 Erie Blvd E, Syracuse, NY 13224</a></div>
+            <div class="place__directions">Take I-690 East toward DeWitt; Tully's is on Erie Blvd E. (Closest Tully's to the hotel.)</div>
           </div>
           <div class="place">
             <div class="place__name">Applebee's Liverpool</div>
             <div class="place__meta">American · Casual</div>
+            <div class="place__address"><a href="https://www.google.com/maps/search/?api=1&query=Applebee%27s+3975+Route+31+Liverpool+NY+13090" target="_blank" rel="noopener noreferrer">3975 State Route 31, Liverpool, NY 13090</a></div>
             <div class="place__directions">Right out of the hotel onto Old Liverpool Rd, then to Rt. 57 (Oswego Rd). Located in the strip across from Wegmans.</div>
           </div>
 
@@ -512,11 +513,13 @@
           <div class="place">
             <div class="place__name">Wegmans (Liverpool)</div>
             <div class="place__meta">Grocery · Hot bar · Pharmacy</div>
+            <div class="place__address"><a href="https://www.google.com/maps/search/?api=1&query=Wegmans+7519+Oswego+Rd+Liverpool+NY+13090" target="_blank" rel="noopener noreferrer">7519 Oswego Rd, Liverpool, NY 13090</a></div>
             <div class="place__directions">Right out of the hotel, follow Old Liverpool Rd to Oswego Rd (Rt. 57). Wegmans is on the left after about 2 miles.</div>
           </div>
           <div class="place">
             <div class="place__name">Liquor Store</div>
             <div class="place__meta">Beer, wine & spirits</div>
+            <div class="place__address"><a href="https://www.google.com/maps/search/?api=1&query=liquor+store+near+7519+Oswego+Rd+Liverpool+NY+13090" target="_blank" rel="noopener noreferrer">Oswego Rd plaza, Liverpool, NY 13090</a></div>
             <div class="place__directions">Same plaza as Wegmans on Oswego Rd — easy walk from the Wegmans lot.</div>
           </div>
         </div>
