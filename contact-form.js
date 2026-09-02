@@ -52,6 +52,12 @@
           if (res.status >= 200 && res.status < 300 && res.data && res.data.ok) {
             form.reset();
             setStatus('success', 'Thanks — your message is on its way. We will reply within one business day.');
+            if (typeof window.gtag === 'function') {
+              window.gtag('event', 'contact_form_submit', {
+                page_location: window.location.href,
+                form_id: 'contactForm',
+              });
+            }
           } else {
             var err = (res.data && res.data.error) || 'Something went wrong. Please try again or call (315) 701-4400.';
             setStatus('error', err);

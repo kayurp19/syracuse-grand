@@ -179,4 +179,36 @@ function renderFooter() {
     a.setAttribute('target', '_blank');
     a.setAttribute('rel', 'noopener noreferrer');
   });
+
+  // GA4 event tracking — book_now click, phone_click, sitewide
+  function trackEvent(name, params) {
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', name, params || {});
+    }
+  }
+
+  // Any anchor whose href points to the booking system counts as a book_now
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a');
+    if (!a || !a.href) return;
+    if (a.href.indexOf('reservations.verticalbooking.com') !== -1) {
+      trackEvent('book_now', {
+        link_url: a.href,
+        link_text: (a.textContent || '').trim().slice(0, 60),
+        page_location: window.location.href,
+      });
+    } else if (a.href.indexOf('tel:') === 0) {
+      trackEvent('phone_click', {
+        phone: a.href.replace('tel:', ''),
+        link_text: (a.textContent || '').trim().slice(0, 60),
+        page_location: window.location.href,
+      });
+    } else if (a.href.indexOf('mailto:') === 0) {
+      trackEvent('email_click', {
+        email: a.href.replace('mailto:', '').split('?')[0],
+        link_text: (a.textContent || '').trim().slice(0, 60),
+        page_location: window.location.href,
+      });
+    }
+  }, { passive: true });
 })();
