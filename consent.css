@@ -1,0 +1,21 @@
+/* Privacy controls share the existing hotel palette and typography. */
+[hidden] { display: none !important; }
+.map-consent {
+  padding: 32px; border: 1px solid #d9c9ab; border-radius: 8px;
+  background: #faf8f3; color: #1d2540; line-height: 1.65;
+}
+.map-consent h3 { margin-top: 0; }
+.map-consent .btn { margin: 12px 12px 12px 0; }
+.map-consent a { display: block; text-decoration: underline; }
+.cookie-receipt { font-size: 13px; line-height: 1.6; color: #485169; overflow-wrap: anywhere; margin: 16px 0; }
+.cookie-modal { max-height: calc(100dvh - 32px); overflow-y: auto; }
+.cookie-modal .cookie-btn--ghost { color: #1d2540; border-color: #9ba0ac; }
+.cookie-btn--gold, .cookie-modal__actions .cookie-btn--gold { color: #142748; background: #d9b46a; border-color: #d9b46a; }
+.cookie-banner { max-height: 85dvh; overflow-y: auto; }
+.cookie-btn:focus-visible, [data-cookie-settings]:focus-visible { outline: 3px solid #d9b46a; outline-offset: 3px; }
+@media (max-width: 600px) {
+  .cookie-banner__actions { width: 100%; }
+  .cookie-banner__actions .cookie-btn { flex: 1 1 100%; min-height: 44px; }
+  .cookie-modal__actions { flex-wrap: wrap; }
+  .cookie-modal__actions .cookie-btn { flex: 1 1 auto; min-height: 44px; }
+}

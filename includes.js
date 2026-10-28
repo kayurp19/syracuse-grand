@@ -154,7 +154,8 @@ function renderFooter() {
   // Site-wide best-rate banner — sits ABOVE the header on every page.
   // Skipped if user already dismissed it this session, or if page opts out.
   const skipBanner = document.body.dataset.banner === "off";
-  const dismissed  = sessionStorage.getItem("sg_banner_dismissed") === "1";
+  let dismissed = false;
+  try { dismissed = sessionStorage.getItem("sg_banner_dismissed") === "1"; } catch (_) {}
   if (headerSlot && !skipBanner && !dismissed) {
     headerSlot.insertAdjacentHTML("beforebegin", renderRateBanner());
     document.body.classList.add("has-rate-banner");

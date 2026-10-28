@@ -96,6 +96,7 @@ function renderFooter() {
       <div class="footer__bottom">
         <span>© <span data-year></span> Syracuse Grand. All rights reserved.</span>
         <span>Liverpool, New York · Central NY</span>
+        <span><a href="/privacy">Privacy Policy</a> · <a href="/cookies">Cookie Policy</a> · <a href="#" data-cookie-settings>Cookie Settings</a></span>
       </div>
     </div>
   </footer>
