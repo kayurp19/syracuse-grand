@@ -19,13 +19,13 @@
   - Indoor heated pool + hot tub
   - 24/7 front desk, 24-hour fitness center
   - Pet-friendly: dogs under 50 lbs, $25/night
-  - 4 miles from Syracuse Hancock International Airport (SYR)
+  - 4.7 driving miles from the Syracuse Hancock International Airport (SYR) passenger terminal
   - 4-7 miles from Destiny USA, Syracuse University, NYS Fairgrounds, Upstate Medical
   - 6 miles from Micron Clay site
   - Right next door to Lockheed Martin Electronics Park (497 Electronics Pkwy, walking distance, same 13088 zip)
   - 4 miles to Empower FCU Amphitheater at Lakeview
   - Official NYS Fair Hotel Partner
-  - 1 banquet/meeting room for groups up to 30-50
+  - 1 meeting room, 700 square feet; do not publish a guest limit without confirmation
 - DO NOT mention 3.7 stars, review counts, or any quantitative review claims
 - DO NOT use "Best Western," "Carrier Dome," "St. Joseph's Health Amphitheater," "Empower Federal Credit Union" (full spell-out)
 - Use "Empower FCU Amphitheater at Lakeview" first, "Empower FCU Amphitheater" subsequent
