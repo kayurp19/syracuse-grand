@@ -4,8 +4,10 @@
  */
 (function () {
   function init() {
-    var form = document.getElementById('contactForm');
+    var form = document.getElementById('contactForm') || document.getElementById('corporateForm');
     if (!form) return;
+    var corporate = form.id === 'corporateForm';
+    var busy = false;
 
     var statusEl = form.querySelector('.contact-form__status');
     var submitBtn = form.querySelector('.contact-form__submit');
@@ -21,11 +23,12 @@
       if (!submitBtn) return;
       submitBtn.disabled = busy;
       submitBtn.classList.toggle('is-busy', !!busy);
-      if (btnLabel) btnLabel.textContent = busy ? 'Sending…' : 'Send message';
+      if (btnLabel) btnLabel.textContent = busy ? 'Sending…' : (corporate ? 'Send rate request' : 'Send message');
     }
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
+      if (busy) return;
       setStatus('', '');
 
       // Native validation first
@@ -38,7 +41,7 @@
       var payload = {};
       fd.forEach(function (v, k) { payload[k] = typeof v === 'string' ? v : ''; });
 
-      setBusy(true);
+      busy = true; setBusy(true);
 
       fetch('/api/contact', {
         method: 'POST',
@@ -51,11 +54,10 @@
         .then(function (res) {
           if (res.status >= 200 && res.status < 300 && res.data && res.data.ok) {
             form.reset();
-            setStatus('success', 'Thanks — your message is on its way. We will reply within one business day.');
-            if (typeof window.gtag === 'function') {
-              window.gtag('event', 'contact_form_submit', {
-                page_location: window.location.href,
-                form_id: 'contactForm',
+            setStatus('success', corporate ? 'Thank you. Your corporate rate request has been sent to our sales team.' : 'Thanks — your message is on its way. We will reply within one business day.');
+            if (typeof window.gtag === 'function' && !payload.sg_hp_token && !payload.company_website && (!corporate || res.data.accepted === true)) {
+              window.gtag('event', corporate ? 'corporate_rate_inquiry' : 'contact_form_submit', {
+                form_id: form.id,
               });
             }
           } else {
@@ -67,7 +69,7 @@
           setStatus('error', 'Could not send right now. Please try again or call (315) 701-4400.');
         })
         .finally(function () {
-          setBusy(false);
+          busy = false; setBusy(false);
         });
     });
   }

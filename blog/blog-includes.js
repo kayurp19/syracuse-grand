@@ -118,4 +118,9 @@ function renderFooter() {
     a.setAttribute('target', '_blank');
     a.setAttribute('rel', 'noopener noreferrer');
   });
+  document.addEventListener('click', e => {
+    const a=e.target.closest?.('a');
+    if(a && a.hostname==='reservations.verticalbooking.com')
+      window.gtag?.('event','book_now',{link_url:a.href,link_text:a.textContent.trim().slice(0,60)});
+  });
 })();

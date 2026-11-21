@@ -221,11 +221,21 @@ app.post('/api/contact', rateLimit, async (req, res) => {
     const name = clean(body.name, 120);
     const email = clean(body.email, 200);
     const phone = clean(body.phone, 60);
-    const subject = clean(body.subject, 120) || 'Website inquiry';
-    const message = clean(body.message, 5000);
+    const corporate = body.kind === 'corporate';
+    const subject = corporate ? 'Corporate rate request' : clean(body.subject, 120) || 'Website inquiry';
+    let message = clean(body.message, 5000);
     const checkin = clean(body.checkin, 40);
     const checkout = clean(body.checkout, 40);
     const guests = clean(body.guests, 20);
+    if (corporate) {
+      const company = clean(body.company,150), stay = clean(body.length,200);
+      const rooms = Number(body.rooms);
+      const validDate = s => /^\d{4}-\d{2}-\d{2}$/.test(s) && Number.isFinite(Date.parse(s)) && new Date(s).toISOString().startsWith(s);
+      const today = new Intl.DateTimeFormat('sv-SE',{timeZone:'America/New_York',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+      if (!company || !stay || !Number.isInteger(rooms) || rooms<1 || rooms>999 || !validDate(checkin) || !validDate(checkout) || checkin<today || checkout<=checkin)
+        return res.status(400).json({ok:false,error:'Please enter your company, room count, expected stay length, and valid arrival and departure dates.'});
+      message = `Company: ${company}\nTravel purpose: ${clean(body.purpose,100)}\nRooms: ${rooms}\nExpected stay length or frequency: ${stay}`;
+    }
 
     // Basic validation
     if (!name || name.length < 2) {
@@ -305,7 +315,7 @@ app.post('/api/contact', rateLimit, async (req, res) => {
       });
     }
 
-    res.json({ ok: true });
+    res.json({ ok: true, accepted: true });
   } catch (err) {
     console.error('contact form error:', {
       code: err.code,

@@ -82,6 +82,7 @@
     });
     if (current.analytics && !loaded) {
       loaded = true;
+      queue('set', 'linker', { domains: ['syracusegrand.com', 'reservations.verticalbooking.com'] });
       queue('js', new Date());
       queue('config', GA, {
         allow_google_signals: false, allow_ad_personalization_signals: false,

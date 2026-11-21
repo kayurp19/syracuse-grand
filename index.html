@@ -5,7 +5,7 @@
 <script src="./consent-init.js?v=20261028a"></script>
 <!-- Optional analytics is loaded only by consent-init.js after opt-in. -->
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Syracuse Grand · Hotel in Liverpool, NY · Book Direct</title>
+<title>Liverpool, NY Hotel Near Syracuse Airport | Syracuse Grand</title>
 <meta name="description" content="Hotel in Liverpool, NY just minutes from Syracuse Hancock International Airport (SYR), Destiny USA, and Syracuse University. Free hot breakfast, free parking, indoor pool. Book direct." />
 <link rel="canonical" href="https://www.syracusegrand.com/" />
 
@@ -19,14 +19,14 @@
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Syracuse Grand" />
 <meta property="og:locale" content="en_US" />
-<meta property="og:title" content="Syracuse Grand · Hotel in Liverpool, NY · Book Direct" />
+<meta property="og:title" content="Liverpool, NY Hotel Near Syracuse Airport | Syracuse Grand" />
 <meta property="og:description" content="Hotel in Liverpool, NY just minutes from Syracuse Hancock International Airport (SYR), Destiny USA, and Syracuse University. Free hot breakfast, free parking, indoor pool. Book direct." />
 <meta property="og:image" content="https://www.syracusegrand.com/assets/images/exterior.jpg" />
 <meta property="og:url" content="https://www.syracusegrand.com/" />
 
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Syracuse Grand · Hotel in Liverpool, NY · Book Direct" />
+<meta name="twitter:title" content="Liverpool, NY Hotel Near Syracuse Airport | Syracuse Grand" />
 <meta name="twitter:description" content="Hotel in Liverpool, NY minutes from SYR airport, Destiny USA, and Syracuse University. Free breakfast, free parking, indoor pool. Book direct." />
 <meta name="twitter:image" content="https://www.syracusegrand.com/assets/images/exterior.jpg" />
 
@@ -47,7 +47,7 @@
   "@id": "https://www.syracusegrand.com/#hotel",
   "name": "Syracuse Grand",
   "description": "A modern, welcoming 3-star hotel in Liverpool, NY \u2014 right next door to Lockheed Martin Electronics Park and minutes from Syracuse Hancock International Airport (SYR), Destiny USA, the NYS Fairgrounds, and Syracuse University.",
-  "url": "https://www.syracusegrand.com",
+  "url": "https://www.syracusegrand.com/",
   "logo": "https://www.syracusegrand.com/assets/images/logo-mark.png",
   "image": [
     "https://www.syracusegrand.com/assets/images/exterior.jpg",
@@ -200,9 +200,9 @@
 {
   "@context": "https://schema.org",
   "@type": "LodgingBusiness",
-  "@id": "https://www.syracusegrand.com/#lodging",
+  "@id": "https://www.syracusegrand.com/#hotel",
   "name": "Syracuse Grand",
-  "url": "https://www.syracusegrand.com",
+  "url": "https://www.syracusegrand.com/",
   "image": "https://www.syracusegrand.com/assets/images/exterior.jpg",
   "telephone": "+1-315-701-4400",
   "priceRange": "$$",
@@ -232,7 +232,7 @@
   "@context": "https://schema.org",
   "@type": "HowTo",
   "name": "How to get to Syracuse Grand from Syracuse Hancock Airport (SYR)",
-  "description": "Step-by-step driving directions from Syracuse Hancock International Airport to Syracuse Grand hotel — about 4 miles, 7 minutes.",
+  "description": "Driving directions from Syracuse Hancock International Airport to Syracuse Grand hotel in Liverpool, NY.",
   "totalTime": "PT7M",
   "step": [
     {
@@ -276,6 +276,7 @@
 }
 </script>
 <link rel="stylesheet" href="./consent.css?v=20261028a" />
+<link rel="stylesheet" href="./home-stays.css?v=1" />
 </head>
 <body>
 
@@ -287,14 +288,17 @@
   <div class="hero__overlay"></div>
   <div class="container hero__content">
     <p class="eyebrow" style="color: var(--gold-bright); font-size: 1.05rem; letter-spacing: 0.22em;">Syracuse - Liverpool · Central New York</p>
-    <h1 class="serif">A modern stay in the <em>heart of Syracuse.</em></h1>
-    <p class="hero__lead">Spacious rooms, an indoor pool and hot tub, daily hot breakfast, and free parking — right next door to Lockheed Martin Electronics Park and minutes from Syracuse Hancock International Airport (SYR), Destiny USA, and Syracuse University.</p>
+    <h1 class="serif">Stay near Syracuse Airport and <em>Lockheed Martin</em></h1>
+    <p class="hero__lead">Free hot breakfast, free parking, and an indoor pool in Liverpool, NY.</p>
     <div class="hero__cta">
-      <a class="btn btn--gold" data-booking href="#">Book your stay <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
-      <a class="btn btn--ghost-light" href="/rooms">Explore rooms</a>
+      <a class="btn btn--gold" id="check-rates" target="_blank" rel="noopener" href="https://reservations.verticalbooking.com/premium/index.html?id_albergo=29493&amp;dc=3887&amp;lingua_int=usa&amp;id_stile=22079">Check Rates</a>
+      <a class="btn btn--ghost-light" href="#corporate-rate">Request a Corporate Rate</a>
     </div>
+    <details class="stay-picker" hidden><summary>Choose dates &amp; guests</summary>
+      <div class="stay-fields"><label>Check-in<input id="stay-in" type="date" required></label><label>Check-out<input id="stay-out" type="date" required></label><label>Guests (adults)<select id="stay-guests"><option>1</option><option selected>2</option><option>3</option><option>4</option></select></label></div>
+      <p>One room. For children or multiple rooms, <a data-booking href="#">use the full booking engine</a>.</p>
+    </details>
   </div>
-  <div class="hero__scroll">Scroll<div class="hero__scroll-line"></div></div>
 </section>
 
 <!-- ================ INTRO ================ -->
@@ -307,7 +311,7 @@
       </div>
       <div class="reveal">
         <p class="lead">Conveniently set off Interstate 90, the Syracuse Grand is a 100% smoke‑free, pet‑friendly hotel built around what really matters when you travel — comfortable rooms, a warm welcome at the front desk, a great breakfast, and quick access to everywhere you need to be. Whether you're here for a meeting at Lockheed Martin Electronics Park next door, a concert at Empower FCU Amphitheater at Lakeview, a layover at Syracuse Hancock International Airport, or a long weekend at Destiny USA, you'll feel at home from the moment you arrive.</p>
-        <a class="card__link" href="/amenities" style="margin-top: 24px;">See what's included <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+        <nav class="stay-guides" aria-label="Plan your stay"><a href="/hotels-near-syracuse-airport">Syracuse Airport guide</a><a href="/hotels-near-micron-clay-ny">Micron contractor stays</a><a href="/groups">Group room blocks</a></nav>
       </div>
     </div>
   </div>
@@ -407,7 +411,7 @@
         <p class="lead">From Destiny USA to the New York State Fairgrounds, from Syracuse University to Onondaga Lake Park, from Lockheed Martin to the future Micron campus — the Syracuse Grand puts Central New York's biggest moments minutes from your door.</p>
         <ul class="spec-list">
           <li><strong>Walking distance to Lockheed Martin Electronics Park</strong></li>
-          <li><a href="/hotels-near-syracuse-airport" style="color: inherit; border-bottom: 1px dotted var(--line-strong);">4 miles to Syracuse Hancock International Airport (SYR)</a></li>
+          <li><a href="/hotels-near-syracuse-airport" style="color: inherit; border-bottom: 1px dotted var(--line-strong);">Syracuse Hancock International Airport (SYR)</a></li>
           <li><a href="/hotels-near-destiny-usa" style="color: inherit; border-bottom: 1px dotted var(--line-strong);">10 minutes to Destiny USA &amp; Armory Square</a></li>
           <li><a href="/hotels-near-micron-clay-ny" style="color: inherit; border-bottom: 1px dotted var(--line-strong);">6 miles to the Micron campus in Clay, NY</a></li>
           <li>7 miles to the New York State Fairgrounds</li>
@@ -432,7 +436,7 @@
         <div class="card__media" style="aspect-ratio: 16/10;"><img src="./assets/images/meeting-room.jpg" alt="Flexible 900 sq ft meeting room at Syracuse Grand hotel" loading="lazy"/></div>
         <div class="card__body">
           <p class="card__meta">Meetings</p>
-          <h3 class="card__title">A flexible meeting room for up to 30</h3>
+          <h3 class="card__title">A flexible room for your next meeting</h3>
           <p class="card__desc">Whether it's a training day, a board meeting, or an interview panel — our 900 sq. ft. meeting space and on-site business center keep things running smoothly.</p>
           <a class="card__link" href="/meetings">Plan your meeting <svg class="arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
         </div>
@@ -451,6 +455,29 @@
 </section>
 
 <!-- ================ REVIEWS ================ -->
+<section class="section section--soft" aria-labelledby="event-heading"><div class="container">
+  <p class="eyebrow">2027 in Syracuse</p><h2 id="event-heading" class="serif">Plan your event stay.</h2>
+  <p class="section-intro">Check live hotel rates for the suggested nights, or change your dates in the booking engine. Parking is free at the hotel; venue parking is separate.</p>
+  <div class="event-grid">
+    <article><p class="eyebrow">May 6–9, 2027</p><h3>Syracuse University graduation</h3><p>Convocations begin Thursday; Commencement is Sunday at the JMA Wireless Dome. Campus parking is free in designated lots. For Sunday, the university recommends parking at the Lally Athletics Complex and taking its shuttle.</p><a href="https://commencement.syracuse.edu/index.php/plan-visit/parking">University parking &amp; shuttle guide</a>
+    <small>Suggested stay: May 6–9 · 3 nights</small><a class="btn btn--gold" target="_blank" rel="noopener" href="https://reservations.verticalbooking.com/premium/index2.html?id_albergo=29493&amp;dc=3887&amp;lingua_int=usa&amp;id_stile=22079&amp;gg=6&amp;mm=5&amp;aa=2027&amp;ggf=9&amp;mmf=5&amp;aaf=2027&amp;notti=3&amp;notti_1=3&amp;tot_camere=1&amp;tot_adulti=2&amp;tot_bambini=0&amp;adulti1=2">Check Event Dates</a></article>
+    <article><p class="eyebrow">July 15–17, 2027</p><h3>Syracuse Nationals</h3><p>Catch the Thursday-through-Saturday car show at the New York State Fairgrounds. The Brown and Orange lots offer paid spectator parking; the Pink lot is reserved for accessible parking.</p><a href="https://www.syracusenationals.com/faq-map">Nationals parking &amp; visitor guide</a>
+    <small>Suggested stay: July 15–18 · 3 nights</small><a class="btn btn--gold" target="_blank" rel="noopener" href="https://reservations.verticalbooking.com/premium/index2.html?id_albergo=29493&amp;dc=3887&amp;lingua_int=usa&amp;id_stile=22079&amp;gg=15&amp;mm=7&amp;aa=2027&amp;ggf=18&amp;mmf=7&amp;aaf=2027&amp;notti=3&amp;notti_1=3&amp;tot_camere=1&amp;tot_adulti=2&amp;tot_bambini=0&amp;adulti1=2">Check Event Dates</a></article>
+    <article><p class="eyebrow">August 25 – September 6, 2027</p><h3>New York State Fair</h3><p>The Fair runs through Labor Day. Paid public parking includes the Orange and Brown lots; the Pink and Gray lots offer accessible parking. Check the Fair’s guide for entrances and shuttle service.</p><a href="https://nysfair.ny.gov/your-visit/plan-your-trip/parking/">State Fair parking &amp; transportation</a>
+    <small>Opening weekend: August 27–29 · 2 nights</small><a class="btn btn--gold" target="_blank" rel="noopener" href="https://reservations.verticalbooking.com/premium/index2.html?id_albergo=29493&amp;dc=3887&amp;lingua_int=usa&amp;id_stile=22079&amp;gg=27&amp;mm=8&amp;aa=2027&amp;ggf=29&amp;mmf=8&amp;aaf=2027&amp;notti=2&amp;notti_1=2&amp;tot_camere=1&amp;tot_adulti=2&amp;tot_bambini=0&amp;adulti1=2">Check Event Dates</a></article>
+  </div></div></section>
+<section class="section" id="corporate-rate" aria-labelledby="corporate-heading"><div class="container corporate-grid">
+  <div><p class="eyebrow">Business travel</p><h2 class="serif" id="corporate-heading">Request a corporate rate.</h2><p class="section-intro">Visiting Lockheed Martin, sending a crew to Micron, or returning to Liverpool regularly? Tell our sales team what you need. This is an inquiry, not a reservation.</p><p>Prefer to talk? <a href="tel:+13157014400">(315) 701-4400</a></p></div>
+  <form class="contact-form" id="corporateForm" method="post" action="/api/contact">
+    <input type="hidden" name="kind" value="corporate"><input name="sg_hp_token" hidden tabindex="-1" autocomplete="off">
+    <div class="contact-form__row"><label class="field">Company<input name="company" autocomplete="organization" required maxlength="150"></label><label class="field">Travel purpose<select name="purpose"><option>Repeat business travel</option><option>Lockheed Martin visit</option><option>Micron contractor stay</option><option>Other business travel</option></select></label></div>
+    <div class="contact-form__row"><label class="field">Contact name<input name="name" autocomplete="name" required minlength="2" maxlength="120"></label><label class="field">Email<input name="email" type="email" autocomplete="email" required maxlength="200"></label></div>
+    <div class="contact-form__row"><label class="field">Phone (optional)<input name="phone" type="tel" autocomplete="tel" maxlength="60"></label><label class="field">Number of rooms<input name="rooms" type="number" min="1" max="999" required></label></div>
+    <div class="contact-form__row"><label class="field">Expected check-in<input type="date" name="checkin" required></label><label class="field">Expected check-out<input type="date" name="checkout" required></label></div>
+    <label class="field">Expected stay length or frequency<input name="length" placeholder="For example, 4 nights each week for 2 months" required maxlength="200"></label>
+    <button class="btn btn--gold contact-form__submit" type="submit"><span class="btn-label">Send rate request</span></button>
+    <p class="contact-form__status" role="status" aria-live="polite"></p><p><small>We use these details to respond to your inquiry. <a href="/privacy">Privacy policy</a></small></p>
+  </form></div></section>
 <section class="section section--soft" id="reviews">
   <div class="container">
     <div style="max-width: 760px; margin: 0 auto 40px; text-align: center;">
@@ -505,5 +532,7 @@
 <script src="./includes.js?v=20261028a"></script>
 <script src="./cookies.js?v=20261028a"></script>
 <script src="./app.js?v=20260509k"></script>
+<script src="./home-stays.js?v=1"></script>
+<script src="./contact-form.js?v=20261121"></script>
 </body>
 </html>
