@@ -4,7 +4,7 @@ const crypto = require('node:crypto');
 const express = require('express');
 const hash = s => crypto.createHash('sha256').update(s).digest('hex');
 const owner = '4b26e4f5a9cd988ed2dffcaa2e4055c18e186eb1bc55bd09ce88e8c3e2d71de7';
-const origin = 'https://www.syracusegrand.com';
+const ownerOrigins = new Set(['https://www.syracusegrand.com', 'https://syracusegrand.com']);
 const esc = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const page = (title,body) => `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${title} | Syracuse Grand</title>
 <style>*{box-sizing:border-box}body{margin:0;color:#192944;background:#f7f5ef;font:16px/1.5 system-ui,sans-serif}header{background:#172741;border-bottom:3px solid #b99e67;padding:15px max(5vw,20px);display:flex;align-items:center;gap:24px;color:white}header img{height:48px;width:76px;object-fit:contain}header span{font-size:12px;letter-spacing:.15em;text-transform:uppercase}main{max-width:980px;margin:40px auto;padding:0 20px}h1,h2{font-family:Georgia,serif;font-weight:normal;line-height:1.15}h1{font-size:clamp(34px,5vw,52px);margin:0}h2{font-size:28px;margin:0 0 14px}.grid{display:grid;grid-template-columns:1.08fr 1fr;gap:20px;margin:26px 0}section{background:white;border:1px solid #dedbd2;border-radius:10px;padding:24px}.narrow{max-width:470px;margin-top:24px}label{display:block;font-weight:600;margin:16px 0 4px}input,button{font:inherit;border-radius:5px;padding:11px 13px}input{width:100%;border:1px solid #8f979f}button{margin-top:18px;background:#203754;color:white;border:0;cursor:pointer}a{color:#234e68}.report{display:block;padding:12px 0;border-top:1px solid #ddd;text-decoration:none}.report strong,.report small{display:block}.report small{color:#495767}.note{padding:12px 15px;background:#eeeee6;border-left:3px solid #a28b54}.ok{background:#e4f2e6;padding:12px}@media(max-width:680px){.grid{grid-template-columns:1fr}main{margin:24px auto}section{padding:18px}}</style>
@@ -25,8 +25,9 @@ module.exports = function mount(app,sendCode,options={}) {
   const promptEmail=form('start','<label for="email">Owner email</label><input id="email" name="email" type="email" autocomplete="email" required>','Email a sign-in code');
   const promptCode=form('verify','<label for="code">Sign-in code</label><input id="code" name="code" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{8}" required>','Sign in');
   app.use('/owner',express.urlencoded({extended:false,limit:'2kb'}),(req,res,next)=>{
-    res.set({'Cache-Control':'private, no-store','X-Robots-Tag':'noindex, nofollow','Referrer-Policy':'no-referrer','Content-Security-Policy':"default-src 'none'; style-src 'unsafe-inline'; img-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'"});
-    if(req.method==='POST' && req.headers.origin!==origin)return res.sendStatus(403);
+    res.set({'Cache-Control':'private, no-store','X-Robots-Tag':'noindex, nofollow','Referrer-Policy':'same-origin','Content-Security-Policy':"default-src 'none'; style-src 'unsafe-inline'; img-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'"});
+    if(req.method==='POST' && (!ownerOrigins.has(req.headers.origin) || req.headers.origin!==`https://${req.get('host')}`))
+      return res.status(403).send(page('Reopen owner sign-in','<p>We could not verify where this form was submitted. Open a fresh sign-in page and try again.</p><a href="https://www.syracusegrand.com/owner">Open owner sign-in</a>'));
     for(const m of [sessions,challenges])for(const [k,v] of m)if(v.until<=Date.now())m.delete(k);
     next();
   });
