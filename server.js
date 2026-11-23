@@ -136,6 +136,14 @@ function clean(v, max = 2000) {
   return String(v).replace(/[\u0000-\u001f\u007f]/g, ' ').trim().slice(0, max);
 }
 
+require('./owner.cjs')(app, async (to, code) => {
+  const mail = { to, from: process.env.SMTP_FROM || process.env.SMTP_USER,
+    subject: 'Your Syracuse Grand owner sign-in code',
+    text: `Your one-time sign-in code is ${code}. Enter it on the Syracuse Grand owner page within 10 minutes. If you did not request it, ignore this email.` };
+  if (usingResendApi()) await sendViaResend(mail);
+  else await getTransporter().sendMail(mail);
+});
+
 /* ---------- Health check ---------- */
 app.get('/api/health', (req, res) => {
   res.json({ ok: true, smtpConfigured: !!getTransporter() });
@@ -404,6 +412,14 @@ app.get('*', (req, res, next) => {
 });
 
 /* ---------- Serve static files (with .html fallback like Caddy try_files) ---------- */
+const publicRootFiles = new Set(fs.readdirSync(ROOT).filter(n => n.endsWith('.html'))
+  .concat(['app.js','consent-init.js','consent.css','contact-form.js','cookies.js','home-stays.css','home-stays.js','includes.js','style.css','robots.txt','sitemap.xml','07194bb832f14a978ec54c7a77c02b8e.txt']));
+app.use((req,res,next) => {
+  const p = req.path;
+  if (p === '/' || p === '/blog' || p === '/blog/' || /^\/(?:assets|blog)\/[a-zA-Z0-9_./% -]+$/.test(p) && !/(?:%2e|%2f|%5c|\.\.)/i.test(p) ||
+      publicRootFiles.has(p.slice(1)) || publicRootFiles.has(p.slice(1)+'.html')) return next();
+  return res.sendStatus(404);
+});
 app.use(express.static(ROOT, {
   extensions: ['html'],
   setHeaders: (res, filePath) => setCaching(res, filePath),
